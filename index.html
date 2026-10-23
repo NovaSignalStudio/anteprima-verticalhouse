@@ -523,6 +523,33 @@ html{overflow-x:clip}
   .hero-cta .btn{padding:13px 18px}
 }
 
+/* catalog photo cards */
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(260px,26vw,380px);gap:14px;margin-top:64px}
+.card{position:relative;display:block;overflow:hidden;border-radius:6px;background:var(--ink-3);text-decoration:none;color:var(--on-dark);isolation:isolate}
+.card.big{grid-column:span 2}
+.card img{position:absolute;inset:0;width:100%;height:100%;max-width:none;object-fit:cover;transform:scale(1.02);transition:transform 1.4s var(--ease),filter .8s}
+.card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,10,12,.82) 0%,rgba(6,10,12,.25) 45%,rgba(6,10,12,0) 70%);transition:opacity .6s}
+.card:hover img{transform:scale(1.09)}
+.card-txt{position:absolute;left:22px;right:22px;bottom:20px;z-index:2;display:flex;flex-direction:column;gap:6px;transition:transform .6s var(--ease)}
+.card:hover .card-txt{transform:translateY(-6px)}
+.card-n{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--sun)}
+.card-t{font-family:var(--f-display);font-weight:600;letter-spacing:-.035em;font-size:clamp(22px,2.1vw,34px);line-height:1.02}
+.card.big .card-t{font-size:clamp(28px,3vw,48px)}
+.card-d{font-size:14px;color:#C9D2D2;max-width:36ch}
+.card-a{position:absolute;top:16px;right:16px;z-index:2;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(11,17,20,.45);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);font-size:16px;transition:transform .6s var(--ease),background .4s}
+.card:hover .card-a{transform:rotate(45deg);background:var(--sun);color:var(--ink)}
+@media (max-width:1040px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:clamp(240px,48vw,360px)}}
+@media (max-width:560px){.cards{grid-template-columns:1fr;grid-auto-rows:300px}.card.big{grid-column:auto}}
+/* running statement over photo */
+.run-sec{position:relative}
+.run-bg{position:absolute;inset:-15% 0;z-index:0}
+.run-bg img{width:100%;height:100%;max-width:none;object-fit:cover}
+.run-sec::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(0deg,rgba(6,10,12,.85),rgba(6,10,12,.45) 50%,rgba(6,10,12,.7))}
+.run,.run-foot{position:relative;z-index:2}
+.run-foot p{color:#D6DDDC}
+.workshop{aspect-ratio:4/3;border-radius:6px;margin-top:36px;position:relative;overflow:hidden}
+.workshop img{width:100%;height:100%;object-fit:cover}
+
 @media (prefers-reduced-motion:reduce){
   .js .curtain{display:none}
   .marquee-track{animation:none}
@@ -637,6 +664,7 @@ html{overflow-x:clip}
 
 <!-- RUNNING STATEMENT -->
 <section class="run-sec solid" id="manifesto" aria-label="Vivere all'aperto tutto l'anno">
+  <div class="run-bg" data-parallax aria-hidden="true"><img src="img/pergola-tramonto.jpg" alt="" loading="lazy" decoding="async"></div>
   <div class="run" aria-hidden="true"><span>Vivere all'aperto</span><span class="serif">tutto l'anno</span><span class="dot"></span><span>Sole</span><span class="serif">quando vuoi</span><span class="dot"></span><span>Ombra</span><span class="serif">quando serve</span></div>
   <div class="wrap run-foot"><p>Una sola struttura progettata sulla tua terrazza, prodotta ad Aprilia e montata dalla nostra squadra.</p></div>
 </section>
@@ -645,16 +673,16 @@ html{overflow-x:clip}
 <section class="on-light solid catalog" id="catalogo">
   <div class="wrap">
     <div class="cat-head"><div class="eyebrow">Catalogo</div><h2 class="h2">Tutto quello che fa <span class="serif">ombra.</span></h2></div>
-    <ol class="index">
-      <li><a href="https://www.verticalhouse.it/serie-tecnic/" target="_blank" rel="noopener" data-cursor="Apri"><span class="i-n">01</span><span class="i-t">Pergole bioclimatiche</span><span class="i-d">Opera, Vision, Nomo, Rialto, Wood</span><span class="i-a">↗</span></a></li>
-      <li><a href="https://www.verticalhouse.it/tende-da-sole-roma/" target="_blank" rel="noopener" data-cursor="Apri"><span class="i-n">02</span><span class="i-t">Tende da sole</span><span class="i-d">A bracci, a caduta, cappottina, con guide</span><span class="i-a">↗</span></a></li>
-      <li><a href="https://www.verticalhouse.it/windy/" target="_blank" rel="noopener" data-cursor="Apri"><span class="i-n">03</span><span class="i-t">Windy e Tecnic</span><span class="i-d">Verticali antivento brevettate</span><span class="i-a">↗</span></a></li>
-      <li><a href="https://www.verticalhouse.it/vetrate-panoramiche/" target="_blank" rel="noopener" data-cursor="Apri"><span class="i-n">04</span><span class="i-t">Vetrate panoramiche</span><span class="i-d">Chiusure scorrevoli per verande e dehors</span><span class="i-a">↗</span></a></li>
-      <li><a href="https://www.verticalhouse.it/gazebi-e-grandi-coperture/" target="_blank" rel="noopener" data-cursor="Apri"><span class="i-n">05</span><span class="i-t">Tettoie e gazebi</span><span class="i-d">Grandi coperture per casa e attività</span><span class="i-a">↗</span></a></li>
-      <li><a href="https://www.verticalhouse.it/zanzariere/" target="_blank" rel="noopener" data-cursor="Apri"><span class="i-n">06</span><span class="i-t">Zanzariere</span><span class="i-d">Plissé, a molla, scorrevoli, a battente</span><span class="i-a">↗</span></a></li>
-      <li><a href="https://www.verticalhouse.it/tende-da-arredo/" target="_blank" rel="noopener" data-cursor="Apri"><span class="i-n">07</span><span class="i-t">Tende d'arredo</span><span class="i-d">Rullo, pacchetto, veneziane, plissé</span><span class="i-a">↗</span></a></li>
-      <li><a href="https://www.verticalhouse.it/arredo-giardino/" target="_blank" rel="noopener" data-cursor="Apri"><span class="i-n">08</span><span class="i-t">Arredo giardino</span><span class="i-d">Talenti, Varaschin, Nardi</span><span class="i-a">↗</span></a></li>
-    </ol>
+    <div class="cards">
+      <a class="card big" href="https://www.verticalhouse.it/serie-tecnic/" target="_blank" rel="noopener" data-cursor="Apri"><img src="img/pergola-tramonto.jpg" alt="Pergola bioclimatica antracite su terrazza al tramonto" loading="lazy" decoding="async"><span class="card-txt"><span class="card-n">01</span><span class="card-t">Pergole bioclimatiche</span><span class="card-d">Opera, Vision, Nomo, Rialto, Wood</span></span><span class="card-a">↗</span></a>
+      <a class="card" href="https://www.verticalhouse.it/tende-da-sole-roma/" target="_blank" rel="noopener" data-cursor="Apri"><img src="img/tenda-dehors-roma.jpg" alt="Tenda da sole rigata su un dehors a Roma" loading="lazy" decoding="async"><span class="card-txt"><span class="card-n">02</span><span class="card-t">Tende da sole</span><span class="card-d">A bracci, a caduta, cappottina, con guide</span></span><span class="card-a">↗</span></a>
+      <a class="card" href="https://www.verticalhouse.it/windy/" target="_blank" rel="noopener" data-cursor="Apri"><img src="img/windy-tempesta.jpg" alt="Pergola chiusa da tende antivento durante un temporale" loading="lazy" decoding="async"><span class="card-txt"><span class="card-n">03</span><span class="card-t">Windy e Tecnic</span><span class="card-d">Verticali antivento brevettate</span></span><span class="card-a">↗</span></a>
+      <a class="card big" href="https://www.verticalhouse.it/vetrate-panoramiche/" target="_blank" rel="noopener" data-cursor="Apri"><img src="img/vetrate-veranda.jpg" alt="Veranda con vetrate panoramiche e LED la sera" loading="lazy" decoding="async"><span class="card-txt"><span class="card-n">04</span><span class="card-t">Vetrate panoramiche</span><span class="card-d">Chiusure scorrevoli per verande e dehors</span></span><span class="card-a">↗</span></a>
+      <a class="card big" href="https://www.verticalhouse.it/gazebi-e-grandi-coperture/" target="_blank" rel="noopener" data-cursor="Apri"><img src="img/gazebo-piscina.jpg" alt="Gazebo bianco a bordo piscina" loading="lazy" decoding="async"><span class="card-txt"><span class="card-n">05</span><span class="card-t">Tettoie e gazebi</span><span class="card-d">Grandi coperture per casa e attività</span></span><span class="card-a">↗</span></a>
+      <a class="card" href="https://www.verticalhouse.it/zanzariere/" target="_blank" rel="noopener" data-cursor="Apri"><img src="img/zanzariera-plisse.jpg" alt="Zanzariera plissé su portafinestra" loading="lazy" decoding="async"><span class="card-txt"><span class="card-n">06</span><span class="card-t">Zanzariere</span><span class="card-d">Plissé, a molla, scorrevoli, a battente</span></span><span class="card-a">↗</span></a>
+      <a class="card" href="https://www.verticalhouse.it/tende-da-arredo/" target="_blank" rel="noopener" data-cursor="Apri"><img src="img/tende-arredo.jpg" alt="Tende a pacchetto in un salotto luminoso" loading="lazy" decoding="async"><span class="card-txt"><span class="card-n">07</span><span class="card-t">Tende d'arredo</span><span class="card-d">Rullo, pacchetto, veneziane, plissé</span></span><span class="card-a">↗</span></a>
+      <a class="card big" href="https://www.verticalhouse.it/arredo-giardino/" target="_blank" rel="noopener" data-cursor="Apri"><img src="img/arredo-giardino.jpg" alt="Salotto da giardino tra ulivi e lavanda" loading="lazy" decoding="async"><span class="card-txt"><span class="card-n">08</span><span class="card-t">Arredo giardino</span><span class="card-d">Talenti, Varaschin, Nardi</span></span><span class="card-a">↗</span></a>
+    </div>
   </div>
 </section>
 
@@ -822,6 +850,7 @@ html{overflow-x:clip}
       <div>
         <div class="eyebrow">L'azienda</div>
         <div class="year" style="margin-top:22px">1980<span class="serif">da un laboratorio ad Aprilia</span></div>
+        <figure class="ph workshop"><img src="img/laboratorio.jpg" alt="Taglio su misura di un telo tecnico in laboratorio" loading="lazy" decoding="async"><figcaption>Taglio teli su misura</figcaption></figure>
       </div>
       <div class="co-copy">
         <p><strong>Vertical House nasce nel 1980 ad Aprilia</strong>, fondata da Giancarlo Martellacci e Katia Mancini. Da quel piccolo laboratorio è cresciuta anno dopo anno, con personale formato direttamente dai fondatori.</p>
@@ -1400,7 +1429,7 @@ if(window.gsap&&window.ScrollTrigger&&!RM){
   // running statement
   gsap.fromTo('.run',{xPercent:4},{xPercent:-62,ease:'none',scrollTrigger:{trigger:'#manifesto',start:'top bottom',end:'bottom top',scrub:.6}});
   // index rows
-  gsap.from('.index li',{y:40,opacity:0,duration:.9,ease:'power3.out',stagger:.06,scrollTrigger:{trigger:'.index',start:'top 85%',once:true}});
+  gsap.from('.card',{y:50,opacity:0,duration:1.1,ease:'power3.out',stagger:.07,scrollTrigger:{trigger:'.cards',start:'top 85%',once:true}});
   // sections arrive like cards
   $$('.solid').forEach(sec=>{gsap.fromTo(sec,{clipPath:'inset(5% 3% -60px 3% round 28px)'},{clipPath:'inset(0% 0% -60px 0% round 0px)',ease:'none',scrollTrigger:{trigger:sec,start:'top bottom',end:'top 30%',scrub:true}});});
   $$('[data-parallax]').forEach(el=>gsap.fromTo(el,{yPercent:-8},{yPercent:8,ease:'none',scrollTrigger:{trigger:el.parentNode,start:'top bottom',end:'bottom top',scrub:true}}));
