@@ -1,0 +1,1586 @@
+<title>Vertical House</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Vertical House, Aprilia dal 1980. Pergole bioclimatiche Pratic, tende da sole, tende antivento Windy, vetrate panoramiche, zanzariere e tende d'arredo su misura per Roma, Pomezia e Aprilia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Newsreader:ital,opsz,wght@1,6..72,300..600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+/* Layout concept: una terrazza 3D fissa dietro la pagina; le sezioni "sole" la mostrano, le sezioni "ombra" la coprono. Mantovana a smerlo come firma grafica. */
+:root{
+  --ink:#0B1114;          /* ombra: nero bluastro */
+  --ink-2:#111A1F;
+  --ink-3:#18242A;
+  --paper:#E6EAE6;        /* alluminio chiaro */
+  --paper-2:#D3DAD6;
+  --sun:#FFB547;          /* luce del sole */
+  --sun-deep:#9A5A00;     /* sole leggibile su chiaro */
+  --petrol:#1E4C58;       /* telo blu petrolio */
+  --on-dark:#ECEFEA;
+  --on-dark-2:#9AA8AA;
+  --on-light:#0B1114;
+  --on-light-2:#4C5A5F;
+  --line-dark:rgba(236,239,234,.14);
+  --line-light:rgba(11,17,20,.16);
+  --glass:rgba(11,17,20,.62);
+  --f-display:"Archivo","Arial Narrow",Helvetica,Arial,sans-serif;
+  --f-body:"Archivo",Helvetica,Arial,sans-serif;
+  --f-serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gut-l:max(16px, env(safe-area-inset-left, 0px));
+  --gut-r:max(16px, env(safe-area-inset-right, 0px));
+  --ease:cubic-bezier(.22,.8,.2,1);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:auto}
+body{margin:0;background:var(--ink);color:var(--on-dark);font-family:var(--f-body);font-size:17px;line-height:1.55;font-stretch:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+img{max-width:100%;display:block}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--sun);outline-offset:3px;border-radius:4px}
+::selection{background:var(--sun);color:var(--ink)}
+.wrap{max-width:1320px;margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.09em;text-transform:uppercase}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--sun);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:18px;height:1px;background:currentColor}
+.on-light .eyebrow{color:var(--sun-deep)}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+.h2{font-size:clamp(34px,5.4vw,78px);line-height:.98;font-weight:800;font-stretch:118%;text-transform:uppercase}
+.serif{font-family:var(--f-serif);font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.02em;font-stretch:100%}
+.lead{font-size:clamp(17px,1.5vw,20px);line-height:1.55;max-width:58ch;color:var(--on-dark-2)}
+.on-light .lead{color:var(--on-light-2)}
+.btn{will-change:transform;display:inline-flex;align-items:center;gap:12px;padding:15px 22px;border-radius:999px;font-weight:600;font-size:15px;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .35s var(--ease),background .3s,color .3s,border-color .3s;white-space:nowrap}
+.btn svg{width:16px;height:16px;transition:transform .35s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.btn-sun{background:var(--sun);color:var(--ink)}
+.btn-sun:hover{background:#ffc56e}
+.btn-ghost{border-color:var(--line-dark);color:var(--on-dark);background:rgba(11,17,20,.25);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.btn-ghost:hover{border-color:var(--on-dark)}
+.on-light .btn-ghost{border-color:var(--line-light);color:var(--on-light);background:transparent}
+.on-light .btn-ghost:hover{border-color:var(--on-light)}
+
+/* ---------- curtain intro (tenda che si riavvolge) ---------- */
+.curtain{display:none}
+.js .curtain{display:flex;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  background:repeating-linear-gradient(90deg,var(--petrol) 0 56px,#E8E4D8 56px 112px);
+  animation:roll 1s var(--ease) .75s forwards;pointer-events:none}
+.curtain::after{content:"";position:absolute;left:0;right:0;bottom:-26px;height:26px;
+  background:radial-gradient(circle at 50% 0,var(--petrol) 13px,transparent 13.5px) 0 0/56px 26px repeat-x,
+             radial-gradient(circle at 50% 0,#E8E4D8 13px,transparent 13.5px) 28px 0/56px 26px repeat-x}
+.curtain .badge{background:var(--ink);color:var(--on-dark);padding:14px 22px;border-radius:4px;font-family:var(--f-display);font-weight:800;font-stretch:125%;letter-spacing:.04em;font-size:20px;text-transform:uppercase}
+.curtain .badge small{display:block;font-family:var(--f-mono);font-weight:400;font-size:11px;letter-spacing:.14em;color:var(--sun);margin-top:4px;font-stretch:100%}
+@keyframes roll{to{transform:translateY(-110%)}}
+
+/* ---------- 3D stage ---------- */
+#stage{position:fixed;inset:0;z-index:0;height:100vh;height:100lvh;background:linear-gradient(180deg,#4f86b3,#e7eef0 70%,#cdd4cf);}
+#stage canvas{width:100%;height:100%;display:block}
+.flare{position:absolute;z-index:2;pointer-events:none;width:120vmax;height:120vmax;left:50%;top:50%;margin:-60vmax 0 0 -60vmax;background:radial-gradient(circle at 50% 50%,rgba(255,214,150,.55) 0%,rgba(255,170,80,.18) 22%,transparent 52%);mix-blend-mode:screen;opacity:0}
+.lb{position:absolute;left:0;right:0;height:13vh;background:#05080a;z-index:4;transform:scaleY(0)}
+.lb-t{top:0;transform-origin:top}.lb-b{bottom:0;transform-origin:bottom}
+.no3d #stage{background:linear-gradient(160deg,#3d6f93 0%,#cfdde2 55%,#c9c2b2 100%)}
+.no3d #stage::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:repeating-linear-gradient(90deg,rgba(11,17,20,.35) 0 18px,transparent 18px 46px);mask:linear-gradient(transparent,#000)}
+main{position:relative;z-index:1}
+.solid{position:relative;z-index:2}
+
+/* ---------- cinema layer ---------- */
+.grain{position:fixed;inset:-50%;z-index:90;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-size:180px 180px;animation:grain 1s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-6%,-2%)}80%{transform:translate(5%,4%)}100%{transform:translate(0,0)}}
+#stage .vignette{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(120% 90% at 55% 45%,transparent 55%,rgba(5,9,11,.55) 100%)}
+.cursor{position:fixed;left:0;top:0;z-index:95;pointer-events:none;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:var(--sun);transition:width .35s var(--ease),height .35s var(--ease),margin .35s var(--ease),background .35s,opacity .3s;display:grid;place-items:center;opacity:0}
+.cursor span{font-family:var(--f-mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);opacity:0;transition:opacity .2s}
+.cursor.on{opacity:1}
+.cursor.big{width:74px;height:74px;margin:-37px 0 0 -37px;background:rgba(255,181,71,.92)}
+.cursor.big span{opacity:1}
+.cursor.link{width:36px;height:36px;margin:-18px 0 0 -18px;background:transparent;border:1px solid var(--sun)}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+.progress{position:absolute;left:0;bottom:-1px;height:2px;width:100%;background:var(--sun);transform:scaleX(0);transform-origin:left;z-index:2}
+/* headline word mask */
+.wm{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.06em;margin-bottom:-.06em}
+.wm > *{display:inline-block}
+/* ---------- header ---------- */
+.top{position:fixed;top:0;left:0;right:0;z-index:50;padding-top:env(safe-area-inset-top,0px);transition:background .4s,backdrop-filter .4s,border-color .4s;border-bottom:1px solid transparent}
+.top.scrolled{background:rgba(11,17,20,.72);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border-bottom-color:var(--line-dark)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;height:72px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none}
+.brand-mark{width:34px;height:34px;border-radius:3px;background:repeating-linear-gradient(90deg,var(--sun) 0 5px,transparent 5px 9px);position:relative;flex:none}
+.brand-mark::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:6px;background:radial-gradient(circle at 50% 0,var(--sun) 2.6px,transparent 3px) 0 0/6px 6px repeat-x}
+.brand-name{font-family:var(--f-display);font-weight:800;font-stretch:125%;letter-spacing:.03em;text-transform:uppercase;font-size:16px;line-height:1}
+.brand-name small{display:block;font-family:var(--f-mono);font-weight:400;font-size:10px;letter-spacing:.16em;color:var(--on-dark-2);font-stretch:100%;margin-top:4px}
+.nav{display:flex;gap:4px;align-items:center}
+.nav a{padding:10px 14px;border-radius:999px;font-size:14px;text-decoration:none;color:var(--on-dark);opacity:.86;transition:opacity .2s,background .2s}
+.nav a:hover{opacity:1;background:rgba(236,239,234,.08)}
+.nav .btn{padding:11px 18px;margin-left:8px;opacity:1}
+.burger{display:none;width:46px;height:46px;border-radius:999px;border:1px solid var(--line-dark);background:rgba(11,17,20,.35);cursor:pointer;align-items:center;justify-content:center}
+.burger span{display:block;width:18px;height:1.5px;background:var(--on-dark);position:relative}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:1.5px;background:var(--on-dark);transition:transform .3s}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+.menu-open .burger span{background:transparent}
+.menu-open .burger span::before{transform:translateY(6px) rotate(45deg)}
+.menu-open .burger span::after{transform:translateY(-6px) rotate(-45deg)}
+.drawer{position:fixed;inset:0;z-index:45;background:var(--ink);padding:calc(96px + env(safe-area-inset-top,0px)) var(--gut-r) 32px var(--gut-l);display:flex;flex-direction:column;gap:6px;transform:translateY(-100%);transition:transform .6s var(--ease);visibility:hidden}
+.menu-open .drawer{transform:none;visibility:visible}
+.drawer a{font-family:var(--f-display);font-weight:800;font-stretch:120%;text-transform:uppercase;font-size:clamp(28px,8vw,44px);text-decoration:none;padding:6px 0;border-bottom:1px solid var(--line-dark)}
+.drawer .mono{margin-top:auto;color:var(--on-dark-2);line-height:2}
+@media (max-width:980px){.nav a:not(.btn){display:none}.burger{display:inline-flex}.nav .btn{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:110px}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,10,12,.66) 0%,rgba(6,10,12,.34) 34%,rgba(6,10,12,0) 58%),linear-gradient(0deg,rgba(6,10,12,.72) 0%,rgba(6,10,12,0) 34%);pointer-events:none}
+.hero h1{text-shadow:0 2px 40px rgba(0,0,0,.25)}
+.hero .wrap{position:relative;width:100%;padding-bottom:28px}
+.hero h1{font-size:clamp(46px,8.6vw,140px);line-height:.88;font-weight:850;font-stretch:125%;text-transform:uppercase;letter-spacing:-.025em;margin:18px 0 22px}
+.hero h1 .line{display:block;overflow:hidden;padding-bottom:.04em}
+.hero h1 .line > span{display:inline-block}
+.hero h1 .serif{font-size:1.16em;line-height:.8;color:var(--sun);font-weight:400}
+.hero .lead{color:#C9D3D3;max-width:52ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-foot{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;margin-top:44px;padding-top:20px;border-top:1px solid var(--line-dark)}
+.cats{display:flex;flex-wrap:wrap;gap:8px;min-width:0}
+.cats a{display:inline-flex;align-items:center;gap:8px;padding:9px 14px 9px 10px;border-radius:999px;background:rgba(11,17,20,.45);border:1px solid var(--line-dark);text-decoration:none;font-size:14px;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:border-color .2s,background .2s}
+.cats a:hover{border-color:var(--sun);background:rgba(11,17,20,.7)}
+.cats svg{width:22px;height:22px;color:var(--sun)}
+.shade-meter{min-width:210px;text-align:right}
+.shade-meter .val{font-family:var(--f-display);font-weight:800;font-stretch:125%;font-size:40px;line-height:1;font-variant-numeric:tabular-nums}
+.shade-meter .bar{height:4px;border-radius:2px;background:rgba(236,239,234,.18);margin-top:10px;overflow:hidden}
+.shade-meter .bar i{display:block;height:100%;width:10%;background:var(--sun);transform-origin:left}
+.shade-meter .mono{color:var(--on-dark-2);margin-top:8px;display:block}
+@media (max-width:720px){.hero-foot{grid-template-columns:1fr}.shade-meter{text-align:left}
+  .hero::before{background:linear-gradient(0deg,rgba(6,10,12,.9) 0%,rgba(6,10,12,.55) 50%,rgba(6,10,12,.1) 100%)}
+  .wa-float{width:48px;height:48px}}
+
+/* ---------- product steps over 3D ---------- */
+.steps{position:relative}
+.step{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding-block:12vh}
+.panel{width:min(450px,100%);box-shadow:0 30px 80px -30px rgba(0,0,0,.55);background:var(--glass);border:1px solid var(--line-dark);border-radius:6px;padding:30px 28px 26px;backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)}
+.panel .idx{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;color:var(--on-dark-2)}
+.panel .idx b{color:var(--sun);font-weight:500}
+.panel h3{font-size:clamp(30px,3.4vw,46px);line-height:.95;font-weight:800;font-stretch:120%;text-transform:uppercase}
+.panel h3 .serif{color:var(--sun)}
+.panel p{color:#C3CDCD;margin:16px 0 0}
+.models{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.models span{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;padding:6px 10px;border:1px solid var(--line-dark);border-radius:999px;color:var(--on-dark)}
+.specs{list-style:none;padding:0;margin:20px 0 0;display:grid;gap:0;border-top:1px solid var(--line-dark)}
+.specs li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--line-dark);font-size:14px}
+.specs li span:first-child{color:var(--on-dark-2)}
+.specs li span:last-child{text-align:right}
+.ph{margin:0;overflow:hidden;background:var(--ink-3);position:relative}
+.ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease),opacity .6s}
+.ph.failed{display:none}
+.js [data-reveal]{--clip:0%}
+.ph[data-reveal]{clip-path:inset(var(--clip) 0 0 0 round 4px)}
+
+.thumbs{display:flex;gap:8px;margin-top:18px}
+.thumbs img{width:33%;aspect-ratio:4/3;object-fit:cover;border-radius:3px;max-width:100%}
+.thumbs:empty{display:none}
+.range{margin-top:20px}
+.range label{display:flex;justify-content:space-between;color:var(--on-dark-2)}
+.range output{color:var(--sun);font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:28px;background:transparent;cursor:pointer;margin-top:6px}
+input[type=range]::-webkit-slider-runnable-track{height:3px;background:linear-gradient(90deg,var(--sun) var(--p,50%),rgba(236,239,234,.2) var(--p,50%));border-radius:2px}
+input[type=range]::-moz-range-track{height:3px;background:rgba(236,239,234,.2);border-radius:2px}
+input[type=range]::-moz-range-progress{height:3px;background:var(--sun)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--on-dark);border:4px solid var(--sun);margin-top:-8.5px}
+input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--on-dark);border:4px solid var(--sun)}
+.step-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.step .wrap{position:relative}
+.detail{position:absolute;right:var(--gut-r);top:50%;width:min(300px,24vw);aspect-ratio:4/3;margin:0;border-radius:4px;box-shadow:0 30px 70px -20px rgba(0,0,0,.6);transform:translateY(20%)}
+.detail figcaption{position:absolute;left:10px;bottom:10px;background:rgba(11,17,20,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:5px 10px;border-radius:999px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-dark)}
+@media (max-width:1100px){.detail{display:none}}
+.chapters{position:fixed;right:calc(22px + env(safe-area-inset-right,0px));top:50%;transform:translate(16px,-50%);z-index:30;display:flex;flex-direction:column;gap:4px;opacity:0;pointer-events:none;transition:opacity .5s,transform .6s var(--ease)}
+.chapters.on{opacity:1;pointer-events:auto;transform:translate(0,-50%)}
+.chapters a{display:flex;align-items:center;justify-content:flex-end;gap:10px;text-decoration:none;padding:6px 0;color:var(--on-dark-2);font-size:12.5px}
+.chapters a span{opacity:0;transform:translateX(6px);transition:opacity .3s,transform .3s;background:rgba(11,17,20,.6);padding:4px 9px;border-radius:999px;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.chapters a i{font-style:normal;font-family:var(--f-mono);font-size:11px;width:34px;text-align:right;position:relative}
+.chapters a i::after{content:"";position:absolute;right:-14px;top:50%;width:6px;height:1px;background:currentColor;transition:width .4s var(--ease)}
+.chapters a{padding-right:14px}
+.chapters a.on{color:var(--sun)}
+.chapters a.on i::after{width:12px}
+.chapters a:hover span,.chapters a.on span{opacity:1;transform:none}
+@media (max-width:1100px){.chapters{display:none}}
+.step-cta .btn{padding:12px 18px;font-size:14px}
+@media (max-width:820px){
+  .step{align-items:flex-end;padding-block:40vh 6vh}
+  .panel{padding:22px 20px}
+  .thumbs{display:none}
+}
+
+/* ---------- light (sun) sections ---------- */
+.on-light{background:var(--paper);color:var(--on-light)}
+.on-light.solid{z-index:3}
+.scallop{position:absolute;left:0;right:0;height:24px;pointer-events:none;z-index:3}
+.scallop.bottom{bottom:-23px;background:radial-gradient(circle at 50% 0,var(--paper) 12px,transparent 12.5px) 0 0/24px 24px repeat-x}
+.scallop.bottom.ink{background-image:radial-gradient(circle at 50% 0,var(--ink) 12px,transparent 12.5px)}
+.scallop.bottom.ink2{background-image:radial-gradient(circle at 50% 0,var(--ink-2) 12px,transparent 12.5px)}
+.stripe-band{height:14px;background:repeating-linear-gradient(90deg,var(--petrol) 0 28px,var(--paper) 28px 56px)}
+
+.catalog{padding-block:120px 110px}
+.statement{font-family:var(--f-display);font-weight:800;font-stretch:112%;text-transform:uppercase;font-size:clamp(30px,4.8vw,72px);line-height:1.02;letter-spacing:-.015em;max-width:20ch;margin:22px 0 0}
+.statement .w{display:inline-block;transition:opacity .2s}
+.statement .serif{color:var(--sun-deep)}
+.cat-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:var(--line-light);border:1px solid var(--line-light);margin-top:72px}
+.cat{background:var(--paper);padding:26px 22px 22px;text-decoration:none;display:flex;flex-direction:column;gap:10px;min-height:250px;position:relative;overflow:hidden;transition:color .35s}
+.cat::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,var(--petrol) 0 22px,#21515e 22px 44px);transform:translateY(-101%);transition:transform .55s var(--ease)}
+.cat::after{content:"";position:absolute;left:0;right:0;top:0;height:12px;transform:translateY(-101%);transition:transform .55s var(--ease)}
+.cat > *{position:relative}
+.cat:hover{color:var(--on-dark)}
+.cat:hover::before{transform:translateY(0)}
+.cat svg{width:44px;height:44px;color:var(--sun-deep);transition:color .35s}
+.cat .ph{aspect-ratio:4/3;margin:-26px -22px 6px;background:var(--paper-2)}
+.cat:hover .ph img{transform:scale(1.07)}
+.cat .ph + svg{display:none}
+.cat .ph.failed + svg{display:block}
+.cat .go{z-index:2;color:var(--on-dark);background:rgba(11,17,20,.55);padding:5px 8px;border-radius:999px;opacity:1}
+.cat:hover svg{color:var(--sun)}
+.cat h3{font-size:22px;line-height:1.05;font-weight:800;font-stretch:112%;text-transform:uppercase;margin-top:auto}
+.cat p{margin:0;font-size:14.5px;color:var(--on-light-2);transition:color .35s}
+.cat:hover p{color:#C9D6D8}
+.cat .go{position:absolute;top:22px;right:20px;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;opacity:.55}
+@media (max-width:1040px){.cat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.cat-grid{grid-template-columns:1fr}.cat{min-height:170px}}
+
+/* ---------- manifesto (photo break) ---------- */
+.manifesto{position:relative;min-height:88vh;display:flex;align-items:flex-end;overflow:hidden;background:var(--ink-2)}
+.manifesto .ph{position:absolute;inset:-12% 0 -12% 0;background:linear-gradient(160deg,#1E4C58,#0B1114)}
+.manifesto .ph.failed{display:block}
+.manifesto .ph.failed img{display:none}
+.manifesto::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(8,13,16,.88) 0%,rgba(8,13,16,.25) 55%,rgba(8,13,16,.05) 100%)}
+.manifesto .wrap{position:relative;z-index:2;width:100%;padding-block:0 9vh}
+.manifesto h2{font-size:clamp(44px,8vw,128px);line-height:.88;font-weight:850;font-stretch:125%;text-transform:uppercase;letter-spacing:-.025em}
+.manifesto h2 .serif{color:var(--sun);font-weight:400}
+.manifesto .row{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-top:26px}
+.manifesto .lead{color:#D2DADA}
+.manifesto .cap{color:var(--on-dark-2)}
+/* ---------- workshop ---------- */
+.workshop{aspect-ratio:4/3;border-radius:6px;margin-top:36px}
+.workshop figcaption{position:absolute;left:12px;bottom:12px;background:rgba(11,17,20,.7);color:var(--on-dark);padding:6px 10px;border-radius:999px;font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+
+/* ---------- configurator ---------- */
+.config{min-height:100vh;min-height:100svh;display:flex;align-items:center;padding-block:110px 60px}
+.config .wrap{width:100%;display:flex;justify-content:flex-end}
+.cfg{width:min(460px,100%);background:var(--glass);border:1px solid var(--line-dark);border-radius:6px;padding:26px 24px;backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2)}
+.cfg h2{font-size:clamp(28px,3vw,40px);line-height:.95;font-weight:800;font-stretch:120%;text-transform:uppercase;margin-top:12px}
+.cfg h2 .serif{color:var(--sun)}
+.cfg fieldset{border:0;padding:0;margin:20px 0 0;min-width:0}
+.cfg legend{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark-2);margin-bottom:10px;padding:0}
+.seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.seg button,.chips button{border:1px solid var(--line-dark);background:rgba(236,239,234,.04);padding:10px 12px;border-radius:4px;cursor:pointer;text-align:left;font-size:14px;transition:border-color .2s,background .2s}
+.seg button[aria-pressed=true],.chips button[aria-pressed=true]{border-color:var(--sun);background:rgba(255,181,71,.12)}
+.seg button small{display:block;color:var(--on-dark-2);font-size:12px}
+.swatches{display:flex;flex-wrap:wrap;gap:10px}
+.sw{width:38px;height:38px;border-radius:50%;border:2px solid transparent;cursor:pointer;padding:0;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18);position:relative}
+.sw[aria-pressed=true]{border-color:var(--sun);transform:scale(1.06)}
+.sw-name{margin-top:8px;font-size:13px;color:var(--on-dark-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border-radius:999px;padding:8px 13px;font-size:13px}
+.sum{margin-top:22px;padding-top:16px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;align-items:end;gap:14px}
+.sum .area{font-family:var(--f-display);font-weight:800;font-stretch:125%;font-size:34px;line-height:1;font-variant-numeric:tabular-nums}
+.sum .mono{color:var(--on-dark-2)}
+.cfg .btn{width:100%;justify-content:center;margin-top:16px}
+.cfg .note{font-size:12.5px;color:var(--on-dark-2);margin:10px 0 0;text-align:center}
+@media (max-width:820px){.config{align-items:flex-end;padding-top:55vh}.config .wrap{justify-content:center}}
+
+/* ---------- wind tunnel ---------- */
+.wind{background:var(--ink-2);padding-block:120px}
+.wind-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:56px;align-items:center;margin-top:10px}
+.wind-copy .h2 .serif{color:var(--sun)}
+.wind-copy .lead{margin-top:22px}
+.tunnel{position:relative;border:1px solid var(--line-dark);border-radius:6px;overflow:hidden;background:var(--ink)}
+.tunnel canvas{display:block;width:100%;aspect-ratio:16/11;max-width:100%}
+.tunnel-hud{position:absolute;left:18px;top:16px;right:18px;display:flex;justify-content:space-between;gap:12px;pointer-events:none}
+.kmh{font-family:var(--f-display);font-weight:850;font-stretch:125%;font-size:clamp(44px,6vw,76px);line-height:.9;font-variant-numeric:tabular-nums}
+.kmh small{font-family:var(--f-mono);font-size:13px;font-weight:400;color:var(--on-dark-2);margin-left:6px;letter-spacing:.08em}
+.beau{text-align:right}
+.beau b{display:block;font-weight:600;font-size:15px;color:var(--on-dark)}
+.beau .mono{color:var(--on-dark-2)}
+.tunnel-ctl{padding:16px 18px 18px;border-top:1px solid var(--line-dark);background:var(--ink-2)}
+.gauge{position:relative;height:38px;margin-top:6px}
+.gauge .mk{position:absolute;top:0;transform:translateX(-50%);font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;color:var(--on-dark-2);white-space:nowrap;text-align:center}
+.gauge .mk::after{content:"";display:block;width:1px;height:10px;background:var(--on-dark-2);margin:4px auto 0}
+.gauge .mk.hi{color:var(--sun)}.gauge .mk.hi::after{background:var(--sun)}
+.tunnel-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-top:10px}
+.toggle{display:inline-flex;border:1px solid var(--line-dark);border-radius:999px;padding:3px}
+.toggle button{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-size:13px;cursor:pointer;color:var(--on-dark-2)}
+.toggle button[aria-pressed=true]{background:var(--on-dark);color:var(--ink)}
+.tunnel-status{font-size:14px;color:var(--on-dark)}
+.tunnel-status i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#5FC28A;margin-right:8px;vertical-align:1px}
+.tunnel-status.warn i{background:#E9734A}
+.footnote{font-size:12.5px;color:var(--on-dark-2);margin-top:18px;max-width:60ch}
+@media (max-width:960px){.wind-grid{grid-template-columns:1fr;gap:36px}}
+
+/* ---------- tax ---------- */
+.tax{padding-block:120px 110px}
+.tax-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:56px;align-items:start}
+.tax .h2 .serif{color:var(--sun-deep)}
+.calc{background:var(--ink);color:var(--on-dark);border-radius:6px;padding:28px 26px;position:relative;overflow:hidden}
+.calc::before{content:"";position:absolute;left:0;right:0;top:0;height:10px;background:repeating-linear-gradient(90deg,var(--sun) 0 18px,transparent 18px 36px)}
+.calc label{display:block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark-2);margin-top:14px}
+.money{display:flex;align-items:center;border-bottom:1px solid var(--line-dark);margin-top:6px}
+.money span{font-family:var(--f-display);font-size:30px;font-weight:700;color:var(--on-dark-2)}
+.money input{border:0;background:transparent;font-family:var(--f-display);font-weight:800;font-stretch:118%;font-size:40px;width:100%;padding:6px 8px;font-variant-numeric:tabular-nums;outline:none}
+.money:focus-within{border-color:var(--sun)}
+.calc .toggle{margin-top:10px}
+.res{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-dark);margin-top:22px;border:1px solid var(--line-dark)}
+.res div{background:var(--ink);padding:16px}
+.res b{display:block;font-family:var(--f-display);font-weight:800;font-stretch:118%;font-size:clamp(24px,2.6vw,32px);font-variant-numeric:tabular-nums;color:var(--sun)}
+.res span{font-size:13px;color:var(--on-dark-2)}
+.req{list-style:none;padding:0;margin:30px 0 0;display:grid;gap:0;border-top:1px solid var(--line-light)}
+.req li{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--line-light);font-size:15.5px}
+.req li span:first-child{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-light-2);padding-top:3px}
+.tax .small{font-size:12.5px;color:var(--on-light-2);margin-top:16px}
+@media (max-width:960px){.tax-grid{grid-template-columns:1fr;gap:40px}.req li{grid-template-columns:1fr;gap:4px}}
+
+/* ---------- projects ---------- */
+.works{padding-block:120px 110px;background:var(--ink)}
+.works-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.wlist{margin-top:56px;border-top:1px solid var(--line-dark)}
+.wrow{display:grid;grid-template-columns:70px minmax(0,1fr) auto;gap:20px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line-dark);text-decoration:none;position:relative}
+.wrow .n{font-family:var(--f-mono);font-size:12px;color:var(--on-dark-2)}
+.wrow h3{font-size:clamp(26px,4.2vw,62px);line-height:1;font-weight:800;font-stretch:115%;text-transform:uppercase;transition:transform .5s var(--ease),color .3s}
+.wrow .t{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--on-dark-2);text-align:right}
+.wrow:hover h3{transform:translateX(14px);color:var(--sun)}
+.peek{position:fixed;left:0;top:0;width:340px;aspect-ratio:4/3;border-radius:4px;overflow:hidden;pointer-events:none;z-index:40;opacity:0;transform:translate(-50%,-50%) scale(.85);transition:opacity .3s,transform .4s var(--ease);background:repeating-linear-gradient(90deg,var(--petrol) 0 26px,#E8E4D8 26px 52px)}
+.peek.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.peek img{width:100%;height:100%;object-fit:cover}
+.peek .fb{position:absolute;inset:auto 0 0 0;padding:14px;background:var(--ink);font-family:var(--f-display);font-weight:800;font-stretch:118%;text-transform:uppercase;font-size:18px}
+.peek .fb small{display:block;font-family:var(--f-mono);font-weight:400;font-size:11px;letter-spacing:.1em;color:var(--sun);font-stretch:100%}
+@media (hover:none),(max-width:820px){.peek{display:none}.wrow{grid-template-columns:44px minmax(0,1fr)}.wrow .t{grid-column:2;text-align:left}}
+
+/* ---------- marquee ---------- */
+.partners{background:var(--ink);padding-block:10px 90px;overflow:hidden}
+.partners .mono{color:var(--on-dark-2)}
+.marquee{display:flex;gap:0;margin-top:22px;border-block:1px solid var(--line-dark);overflow:hidden;mask:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.marquee-track{display:flex;flex:none;animation:mq 38s linear infinite}
+.marquee span{font-family:var(--f-display);font-weight:700;font-stretch:125%;text-transform:uppercase;font-size:clamp(22px,3vw,40px);padding:22px 32px;white-space:nowrap;color:var(--on-dark)}
+.marquee span::after{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--sun);margin-left:64px;vertical-align:middle}
+@keyframes mq{to{transform:translateX(-100%)}}
+
+/* ---------- company ---------- */
+.company{padding-block:130px 120px}
+.co-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:64px;align-items:start}
+.year{font-family:var(--f-display);font-weight:900;font-stretch:125%;font-size:clamp(110px,17vw,260px);line-height:.8;letter-spacing:-.04em;color:var(--on-light)}
+.year .serif{display:block;font-size:.26em;letter-spacing:-.01em;color:var(--sun-deep);margin-top:.18em;line-height:1}
+.co-copy p{font-size:18px;line-height:1.6;max-width:60ch;color:var(--on-light-2);margin:0 0 18px}
+.co-copy p strong{color:var(--on-light);font-weight:600}
+.quote{font-family:var(--f-serif);font-style:italic;font-size:clamp(26px,3vw,40px);line-height:1.15;color:var(--on-light);margin:34px 0;max-width:22ch;letter-spacing:-.01em}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line-light);border:1px solid var(--line-light);margin-top:36px}
+.facts div{background:var(--paper);padding:18px}
+.facts b{display:block;font-family:var(--f-display);font-weight:800;font-stretch:118%;text-transform:uppercase;font-size:18px}
+.facts span{font-size:14px;color:var(--on-light-2)}
+.showroom{margin-top:36px;display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center;padding:20px 22px;border-radius:6px;background:var(--ink);color:var(--on-dark);text-decoration:none;transition:transform .4s var(--ease)}
+.showroom:hover{transform:translateY(-3px)}
+.showroom .cube{width:54px;height:54px;border-radius:50%;background:var(--sun);display:grid;place-items:center}
+.showroom .cube svg{width:28px;height:28px;color:var(--ink)}
+.showroom b{display:block;font-family:var(--f-display);font-weight:800;font-stretch:118%;text-transform:uppercase;font-size:18px}
+.showroom span{font-size:14px;color:var(--on-dark-2)}
+@media (max-width:960px){.co-grid{grid-template-columns:1fr;gap:28px}.facts{grid-template-columns:1fr}}
+
+/* ---------- process ---------- */
+.process{background:var(--ink-2);padding-block:120px}
+.proc{padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;margin-top:60px;counter-reset:p;border-top:1px solid var(--line-dark)}
+.proc li{list-style:none;padding:26px 22px 10px 0;position:relative}
+.proc li::before{counter-increment:p;content:"0" counter(p);font-family:var(--f-mono);font-size:12px;color:var(--sun);display:block;margin-bottom:40px}
+.proc li::after{content:"";position:absolute;top:-4px;left:0;width:7px;height:7px;border-radius:50%;background:var(--sun)}
+.proc h3{font-size:20px;font-weight:800;font-stretch:115%;text-transform:uppercase;line-height:1.05}
+.proc p{font-size:14.5px;color:var(--on-dark-2);margin:10px 0 0}
+.proc ol{padding:0;margin:0;display:contents}
+@media (max-width:1000px){.proc{grid-template-columns:1fr 1fr}.proc li::before{margin-bottom:14px}}
+@media (max-width:560px){.proc{grid-template-columns:1fr}}
+
+/* ---------- contact / footer ---------- */
+.contact{background:var(--ink);padding-block:130px 40px;position:relative;overflow:hidden}
+.contact .big{font-family:var(--f-display);font-weight:850;font-stretch:125%;text-transform:uppercase;font-size:clamp(44px,8vw,128px);line-height:.88;letter-spacing:-.025em}
+.contact .big .serif{color:var(--sun);font-weight:400;font-size:1.12em}
+.ct-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr);gap:56px;margin-top:64px;align-items:start}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form .full{grid-column:1/-1}
+.field label{display:block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark-2);margin-bottom:6px}
+.field input,.field select,.field textarea{width:100%;background:var(--ink-2);border:1px solid var(--line-dark);border-radius:4px;padding:13px 14px;font-size:16px;outline:none;transition:border-color .2s}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--sun)}
+.form .btn{justify-self:start}
+.sent{grid-column:1/-1;border:1px solid var(--sun);border-radius:6px;padding:18px;background:rgba(255,181,71,.07)}
+.sent p{margin:0 0 12px}
+.sent .row{display:flex;flex-wrap:wrap;gap:10px}
+.lines{display:grid;gap:0;border-top:1px solid var(--line-dark)}
+.cline{display:grid;grid-template-columns:110px minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line-dark)}
+.cline .mono{color:var(--on-dark-2)}
+.cline a,.cline .v{font-size:19px;text-decoration:none;font-weight:500;overflow-wrap:anywhere}
+.cline a:hover{color:var(--sun)}
+.copy{border:1px solid var(--line-dark);background:transparent;border-radius:999px;padding:6px 12px;font-size:12px;cursor:pointer;font-family:var(--f-mono);letter-spacing:.06em;color:var(--on-dark-2)}
+.copy:hover{border-color:var(--on-dark);color:var(--on-dark)}
+.social{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.social a{padding:9px 15px;border:1px solid var(--line-dark);border-radius:999px;text-decoration:none;font-size:14px}
+.social a:hover{border-color:var(--sun)}
+.foot{margin-top:110px;padding-top:26px;border-top:1px solid var(--line-dark);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--on-dark-2);font-size:13px}
+.wordmark{font-family:var(--f-display);font-weight:900;font-stretch:125%;text-transform:uppercase;font-size:clamp(46px,13.5vw,220px);line-height:.8;letter-spacing:-.04em;margin-top:70px;color:transparent;-webkit-text-stroke:1px rgba(236,239,234,.22);white-space:nowrap;overflow:hidden}
+@media (max-width:960px){.ct-grid{grid-template-columns:1fr;gap:48px}.form{grid-template-columns:1fr}.cline{grid-template-columns:1fr auto}.cline .mono{grid-column:1/-1}}
+
+.wa-float{position:fixed;right:calc(18px + env(safe-area-inset-right,0px));bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:44;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .3s var(--ease)}
+.wa-float:hover{transform:scale(1.08)}
+.wa-float svg{width:28px;height:28px;color:#fff}
+
+@media (prefers-reduced-motion:reduce){
+  .js .curtain{display:none}
+  .marquee-track{animation:none}
+  *{transition-duration:.01ms!important}
+}
+</style>
+
+<div class="curtain" aria-hidden="true"><div class="badge">Vertical House<small>Tende da sole · dal 1980</small></div></div>
+
+<div class="grain" aria-hidden="true"></div><div class="cursor" id="cursor" aria-hidden="true"><span id="cursorLbl"></span></div>
+<div id="stage" aria-hidden="true"><canvas id="scene"></canvas><div class="vignette"></div><div class="lb lb-t" id="lbT"></div><div class="lb lb-b" id="lbB"></div><div class="flare" id="flare"></div></div>
+
+<header class="top" id="top"><div class="progress" id="progress"></div>
+  <div class="wrap">
+    <a class="brand" href="#hero" aria-label="Vertical House, torna su">
+      <span class="brand-mark"></span>
+      <span class="brand-name">Vertical House<small>Aprilia · dal 1980</small></span>
+    </a>
+    <nav class="nav" aria-label="Principale">
+      <a href="#prodotti">Prodotti</a>
+      <a href="#configura">Configura</a>
+      <a href="#vento">Prova vento</a>
+      <a href="#detrazione">Detrazione</a>
+      <a href="#lavori">Lavori</a>
+      <a href="#azienda">Azienda</a>
+      <a class="btn btn-sun" href="#contatti">Preventivo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      <button class="burger" id="burger" aria-label="Apri menu" aria-expanded="false"><span></span></button>
+    </nav>
+  </div>
+</header>
+<div class="drawer" id="drawer">
+  <a href="#prodotti">Prodotti</a><a href="#configura">Configura</a><a href="#vento">Prova vento</a><a href="#detrazione">Detrazione</a><a href="#lavori">Lavori</a><a href="#azienda">Azienda</a><a href="#contatti">Contatti</a>
+  <div class="mono">06 925 6241<br>info@verticalhouse.it<br>Via dei Rutuli 90, Aprilia</div>
+</div>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="hero" data-preset="hero" data-scene>
+  <div class="wrap">
+    <div class="eyebrow">Tende da sole · Pergole · Vetrate — Roma, Pomezia, Aprilia</div>
+    <h1 aria-label="Siamo la vostra ombra.">
+      <span class="line"><span>Siamo la</span></span>
+      <span class="line"><span>vostra <span class="serif">ombra.</span></span></span>
+    </h1>
+    <p class="lead">Pergole bioclimatiche, tende da sole, chiusure antivento e vetrate panoramiche su misura. Le progettiamo, le produciamo e le installiamo da Aprilia, dal 1980.</p>
+    <div class="hero-cta">
+      <a class="btn btn-sun" href="#configura">Configura la tua tenda <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      <a class="btn btn-ghost" href="#prodotti">Scopri i prodotti</a>
+    </div>
+    <div class="hero-foot">
+      <nav class="cats" aria-label="Cosa vendiamo">
+        <a href="#p-pergole"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 34V13M33 34V13M4 13h32M9 13l3-5M15 13l3-5M21 13l3-5M27 13l3-5"/></svg>Pergole</a>
+        <a href="#p-tende"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 10h28M6 10l-2 12h32l-2-12M4 22c1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0"/></svg>Tende da sole</a>
+        <a href="#p-windy"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6v28M31 6v28M9 8h22M12 8c3 8 3 16 0 24M28 8c3 8 3 16 0 24M12 32h16"/></svg>Windy antivento</a>
+        <a href="#p-vetrate"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h28v26H6zM15.3 8v26M24.6 8v26M9 14l3-3M18 14l3-3"/></svg>Vetrate</a>
+        <a href="#catalogo"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 6h24v28H8zM8 13h24M8 20h24M8 27h24M14 6v28M20 6v28M26 6v28"/></svg>Zanzariere</a>
+        <a href="#catalogo"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 7h28M8 7v18h24V7M8 13h24M8 19h24M20 25v7"/></svg>Tende d'arredo</a>
+      </nav>
+      <div class="shade-meter" aria-live="off">
+        <div class="val"><span id="shadeVal">12</span>%</div>
+        <div class="bar"><i id="shadeBar"></i></div>
+        <span class="mono">Ombra sulla terrazza · scorri</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT STEPS -->
+<section class="steps" id="prodotti" aria-label="Prodotti">
+  <nav class="chapters" id="chapters" aria-label="Capitoli prodotti">
+    <a href="#p-pergole" data-ch="pergola"><i>01</i><span>Pergole</span></a>
+    <a href="#p-tende" data-ch="awning"><i>02</i><span>Tende da sole</span></a>
+    <a href="#p-windy" data-ch="windy"><i>03</i><span>Antivento</span></a>
+    <a href="#p-vetrate" data-ch="vetrate"><i>04</i><span>Vetrate</span></a>
+  </nav>
+  <div class="step" id="p-pergole" data-preset="pergola" data-scene>
+    <div class="wrap" style="width:100%">
+      <article class="panel">
+        <div class="idx mono"><span><b>01</b> / 04 · Pergole</span><span>Pratic</span></div>
+        <h3>Pergole <span class="serif">bioclimatiche</span></h3>
+        <p>Lamelle orientabili in alluminio: le apri e passa la luce, le chiudi e hai ombra piena e riparo dalla pioggia. Vivere all'aperto tutto l'anno, con un comando.</p>
+        <div class="models"><span>Opera</span><span>Vision</span><span>Nomo</span><span>Rialto</span><span>Wood</span><span>Wood Plus</span></div>
+        <div class="range">
+          <label class="mono" for="louverRange"><span>Prova: orienta le lamelle</span><output id="louverOut">90°</output></label>
+          <input type="range" id="louverRange" min="0" max="100" value="35">
+        </div>
+        <ul class="specs">
+          <li><span>Struttura</span><span>Alluminio, anche in versione legno</span></li>
+          <li><span>Comando</span><span>Motore radiocomandato</span></li>
+          <li><span>Chiusure</span><span>Tende verticali e vetrate integrabili</span></li>
+        </ul>
+        <div class="step-cta"><a class="btn btn-sun" href="#configura">Configura la pergola</a><a class="btn btn-ghost" href="https://www.verticalhouse.it/serie-tecnic/" target="_blank" rel="noopener">Scheda modelli</a></div>
+      </article>
+      <figure class="ph detail" data-reveal><img src="img/lamelle-dettaglio.jpg" alt="Lamelle orientabili di una pergola bioclimatica in alluminio antracite" loading="lazy" decoding="async"><figcaption>Dettaglio · lamelle orientabili</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step" id="p-tende" data-preset="awning" data-scene>
+    <div class="wrap" style="width:100%">
+      <article class="panel">
+        <div class="idx mono"><span><b>02</b> / 04 · Tende da sole</span><span>Su misura</span></div>
+        <h3>Tende <span class="serif">da sole</span></h3>
+        <p>A bracci, a caduta, a cappottina, con guide o a molla. Le costruiamo sulla misura del tuo balcone o della tua vetrina, con tessuti tecnici che non scoloriscono e cassonetto che protegge il telo quando è chiuso.</p>
+        <div class="models"><span>A bracci</span><span>A caduta</span><span>Cappottina</span><span>Con guide</span><span>A molla</span></div>
+        <ul class="specs">
+          <li><span>Tessuti</span><span>Tempotest e tessuti tecnici</span></li>
+          <li><span>Comando</span><span>Manuale o motorizzato</span></li>
+          <li><span>Per</span><span>Casa, bar, ristoranti, negozi</span></li>
+        </ul>
+        <div class="step-cta"><a class="btn btn-sun" href="#configura" data-cfg="tenda">Configura la tenda</a><a class="btn btn-ghost" href="https://www.verticalhouse.it/tende-da-sole-roma/" target="_blank" rel="noopener">Tutti i modelli</a></div>
+      </article>
+      <figure class="ph detail" data-reveal><img src="img/tenda-dehors-roma.jpg" alt="Tenda da sole a bracci rigata su un dehors in una via di Roma" loading="lazy" decoding="async"><figcaption>Dehors · tenda a bracci</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step" id="p-windy" data-preset="windy" data-scene>
+    <div class="wrap" style="width:100%">
+      <article class="panel">
+        <div class="idx mono"><span><b>03</b> / 04 · Antivento</span><span>Brevetto Pratic</span></div>
+        <h3>Windy <span class="serif">e Tecnic</span></h3>
+        <p>Tende verticali con guide laterali che trattengono il telo: diventano una barriera contro vento e pioggia. Il sistema Tecnic si integra anche su strutture esistenti e si comanda via radio.</p>
+        <ul class="specs">
+          <li><span>Prova</span><span>Galleria del vento Pininfarina</span></li>
+          <li><span>Resistenza</span><span>Fino a 90 km/h</span></li>
+          <li><span>Finitura</span><span>Cassonetto che protegge il telo</span></li>
+        </ul>
+        <div class="step-cta"><a class="btn btn-sun" href="#vento">Mettila alla prova</a><a class="btn btn-ghost" href="#configura" data-cfg="windy">Configura</a></div>
+      </article>
+      <figure class="ph detail" data-reveal><img src="img/windy-tempesta.jpg" alt="Pergola chiusa con tende verticali antivento durante un temporale" loading="lazy" decoding="async"><figcaption>Tempesta · telo nelle guide</figcaption></figure>
+    </div>
+  </div>
+
+  <div class="step" id="p-vetrate" data-preset="vetrate" data-scene>
+    <div class="wrap" style="width:100%">
+      <article class="panel">
+        <div class="idx mono"><span><b>04</b> / 04 · Vetrate</span><span>Anche di sera</span></div>
+        <h3>Vetrate <span class="serif">panoramiche</span></h3>
+        <p>Pannelli scorrevoli che chiudono pergole e verande senza togliere la vista. La terrazza diventa una stanza in più, anche d'inverno. D'estate li raccogli di lato e torni all'aperto.</p>
+        <ul class="specs">
+          <li><span>Apertura</span><span>Scorrevole, impacchettabile</span></li>
+          <li><span>Ideale per</span><span>Verande, dehors, terrazze</span></li>
+          <li><span>Abbinabile a</span><span>Pergole e illuminazione LED</span></li>
+        </ul>
+        <div class="step-cta"><a class="btn btn-sun" href="#configura" data-cfg="vetrate">Configura la chiusura</a><a class="btn btn-ghost" href="https://www.verticalhouse.it/vetrate-panoramiche/" target="_blank" rel="noopener">Approfondisci</a></div>
+      </article>
+      <figure class="ph detail" data-reveal><img src="img/vetrate-veranda.jpg" alt="Veranda con vetrate panoramiche e luci LED la sera" loading="lazy" decoding="async"><figcaption>Sera · vetrate e LED</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto solid" id="manifesto" aria-label="Vivere all'aperto">
+  <figure class="ph" data-parallax><img src="img/pergola-tramonto.jpg" alt="Terrazza al tramonto con pergola bioclimatica antracite e pini romani sullo sfondo" loading="lazy" decoding="async"></figure>
+  <div class="wrap">
+    <div class="eyebrow">Roma · Pomezia · Aprilia</div>
+    <h2 style="margin-top:18px">Vivere all'aperto <span class="serif">tutto l'anno.</span></h2>
+    <div class="row">
+      <p class="lead">Sole quando lo vuoi, ombra quando serve, riparo da vento e pioggia. Un'unica struttura progettata sulla tua terrazza, prodotta ad Aprilia e montata dalla nostra squadra.</p>
+      <a class="btn btn-sun" href="#configura">Inizia dal configuratore <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- CATALOG -->
+<section class="on-light solid catalog" id="catalogo">
+  <div class="wrap">
+    <div class="eyebrow">Il catalogo completo</div>
+    <p class="statement" id="statement">Progettiamo l'ombra su misura per la tua casa, il tuo locale, la tua <span class="serif">attività.</span></p>
+    <div class="cat-grid">
+      <a class="cat" data-cursor="Apri" href="https://www.verticalhouse.it/serie-tecnic/" target="_blank" rel="noopener"><span class="go">↗</span>
+        <figure class="ph" data-reveal><img src="img/pergola-tramonto.jpg" alt="Pergola bioclimatica su terrazza" loading="lazy" decoding="async"></figure><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M7 34V13M33 34V13M4 13h32M9 13l3-5M15 13l3-5M21 13l3-5M27 13l3-5"/></svg>
+        <h3>Pergole bioclimatiche</h3><p>Opera, Vision, Nomo, Rialto, Wood. Lamelle orientabili, chiusure integrate.</p></a>
+      <a class="cat" data-cursor="Apri" href="https://www.verticalhouse.it/tende-da-sole-roma/" target="_blank" rel="noopener"><span class="go">↗</span>
+        <figure class="ph" data-reveal><img src="img/tenda-dehors-roma.jpg" alt="Tenda da sole rigata" loading="lazy" decoding="async"></figure><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 10h28M6 10l-2 12h32l-2-12M4 22c1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0 1.5 3 4.5 3 6 0"/></svg>
+        <h3>Tende da sole</h3><p>A bracci, a caduta, a cappottina, con guide e a molla. Su misura.</p></a>
+      <a class="cat" data-cursor="Apri" href="https://www.verticalhouse.it/windy/" target="_blank" rel="noopener"><span class="go">↗</span>
+        <figure class="ph" data-reveal><img src="img/windy-tempesta.jpg" alt="Chiusure verticali antivento" loading="lazy" decoding="async"></figure><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M9 6v28M31 6v28M9 8h22M12 8c3 8 3 16 0 24M28 8c3 8 3 16 0 24M12 32h16"/></svg>
+        <h3>Windy · Tecnic</h3><p>Verticali brevettate con guide laterali, testate fino a 90 km/h.</p></a>
+      <a class="cat" data-cursor="Apri" href="https://www.verticalhouse.it/vetrate-panoramiche/" target="_blank" rel="noopener"><span class="go">↗</span>
+        <figure class="ph" data-reveal><img src="img/vetrate-veranda.jpg" alt="Vetrate panoramiche" loading="lazy" decoding="async"></figure><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 8h28v26H6zM15.3 8v26M24.6 8v26M9 14l3-3M18 14l3-3"/></svg>
+        <h3>Vetrate panoramiche</h3><p>Chiusure scorrevoli per verande e dehors, con la vista intatta.</p></a>
+      <a class="cat" data-cursor="Apri" href="https://www.verticalhouse.it/gazebi-e-grandi-coperture/" target="_blank" rel="noopener"><span class="go">↗</span>
+        <figure class="ph" data-reveal><img src="img/gazebo-piscina.jpg" alt="Gazebo a bordo piscina" loading="lazy" decoding="async"></figure><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 16L20 6l16 10M8 16v18M32 16v18M4 16h32M14 34v-8h12v8"/></svg>
+        <h3>Tettoie e gazebi</h3><p>Grandi coperture per giardini, piscine e attività commerciali.</p></a>
+      <a class="cat" data-cursor="Apri" href="https://www.verticalhouse.it/zanzariere/" target="_blank" rel="noopener"><span class="go">↗</span>
+        <figure class="ph" data-reveal><img src="img/zanzariera-plisse.jpg" alt="Zanzariera plissé su portafinestra" loading="lazy" decoding="async"></figure><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 6h24v28H8zM8 13h24M8 20h24M8 27h24M14 6v28M20 6v28M26 6v28"/></svg>
+        <h3>Zanzariere</h3><p>Plissé, a molla, scorrevoli o a battente. Casa luminosa e senza insetti.</p></a>
+      <a class="cat" data-cursor="Apri" href="https://www.verticalhouse.it/tende-da-arredo/" target="_blank" rel="noopener"><span class="go">↗</span>
+        <figure class="ph" data-reveal><img src="img/tende-arredo.jpg" alt="Tende a pacchetto in un salotto" loading="lazy" decoding="async"></figure><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 7h28M8 7v18h24V7M8 13h24M8 19h24M20 25v7"/></svg>
+        <h3>Tende d'arredo</h3><p>A rullo, a pacchetto, veneziane e plissé per ogni stile d'interno.</p></a>
+      <a class="cat" data-cursor="Apri" href="https://www.verticalhouse.it/arredo-giardino/" target="_blank" rel="noopener"><span class="go">↗</span>
+        <figure class="ph" data-reveal><img src="img/arredo-giardino.jpg" alt="Salotto da giardino tra gli ulivi" loading="lazy" decoding="async"></figure><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 19h20v4H10zM12 23v11M28 23v11M12 19V8h16v11"/></svg>
+        <h3>Arredo giardino</h3><p>Complementi outdoor selezionati da marchi come Talenti, Varaschin e Nardi.</p></a>
+    </div>
+  </div>
+  <div class="scallop bottom"></div>
+</section>
+
+<!-- CONFIGURATOR -->
+<section class="config" id="configura" data-preset="config" data-scene>
+  <div class="wrap">
+    <form class="cfg" id="cfgForm">
+      <div class="eyebrow">Configuratore · anteprima 3D</div>
+      <h2>Disegna la tua <span class="serif">ombra</span></h2>
+      <fieldset>
+        <legend>Prodotto</legend>
+        <div class="seg" id="cfgProduct">
+          <button type="button" data-v="pergola" aria-pressed="true">Pergola<small>bioclimatica</small></button>
+          <button type="button" data-v="tenda" aria-pressed="false">Tenda da sole<small>a bracci</small></button>
+          <button type="button" data-v="windy" aria-pressed="false">Pergola + Windy<small>chiusure antivento</small></button>
+          <button type="button" data-v="vetrate" aria-pressed="false">Pergola + vetrate<small>veranda</small></button>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Struttura</legend>
+        <div class="swatches" id="cfgStruct"></div>
+        <div class="sw-name" id="structName"></div>
+      </fieldset>
+      <fieldset id="fabricSet">
+        <legend>Telo</legend>
+        <div class="swatches" id="cfgFabric"></div>
+        <div class="sw-name" id="fabricName"></div>
+      </fieldset>
+      <fieldset>
+        <legend>Misure indicative</legend>
+        <div class="range" style="margin-top:0">
+          <label class="mono" for="cfgW"><span>Larghezza</span><output id="cfgWOut"></output></label>
+          <input type="range" id="cfgW" min="300" max="600" step="10" value="420">
+        </div>
+        <div class="range" style="margin-top:6px">
+          <label class="mono" for="cfgD"><span id="cfgDLabel">Profondità</span><output id="cfgDOut"></output></label>
+          <input type="range" id="cfgD" min="250" max="500" step="10" value="360">
+        </div>
+        <div class="range" style="margin-top:6px" id="cfgLouverWrap">
+          <label class="mono" for="cfgL"><span>Lamelle</span><output id="cfgLOut"></output></label>
+          <input type="range" id="cfgL" min="0" max="100" value="45">
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Optional</legend>
+        <div class="chips" id="cfgOpt">
+          <button type="button" data-v="Motore radiocomandato" aria-pressed="true">Motore radio</button>
+          <button type="button" data-v="Sensore vento e sole" aria-pressed="false">Sensore vento/sole</button>
+          <button type="button" data-v="Illuminazione LED" aria-pressed="true">Luci LED</button>
+          <button type="button" data-v="sera" aria-pressed="false">Vedi di sera</button>
+        </div>
+      </fieldset>
+      <div class="sum">
+        <div><div class="mono">Superficie coperta</div><div class="area"><span id="cfgArea">15,1</span> m²</div></div>
+        <div class="mono" id="cfgSize" style="text-align:right">4,20 × 3,60 m</div>
+      </div>
+      <a class="btn btn-sun" id="cfgSend" href="https://wa.me/393791959057" target="_blank" rel="noopener">Richiedi preventivo su WhatsApp <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      <p class="note">La configurazione arriva già compilata. Misure definitive al rilievo.</p>
+    </form>
+  </div>
+</section>
+
+<!-- WIND TUNNEL -->
+<section class="wind solid" id="vento">
+  <div class="wrap">
+    <div class="wind-grid">
+      <div class="wind-copy">
+        <div class="eyebrow">Galleria del vento</div>
+        <h2 class="h2" style="margin-top:18px">Il vento <span class="serif">non passa.</span></h2>
+        <p class="lead">Le guide laterali delle tende Windy e Tecnic trattengono il telo anche con raffiche forti. I sistemi Pratic sono stati provati con test dinamici nella galleria del vento Pininfarina. Sposta il cursore e guarda cosa succede.</p>
+        <ul class="specs" style="max-width:460px;margin-top:30px">
+          <li><span>Tende Flex ed Ellisse</span><span class="mono" style="color:var(--on-dark)">~70 km/h · Beaufort 8</span></li>
+          <li><span>Sistema Tecnic e Windy</span><span class="mono" style="color:var(--sun)">90 km/h</span></li>
+          <li><span>Primo impegno sul vento</span><span class="mono" style="color:var(--on-dark)">dal 1994</span></li>
+        </ul>
+        <p class="footnote">Valori dichiarati dal produttore Pratic per i test in galleria del vento. La tenuta reale dipende da misure, installazione e manutenzione.</p>
+      </div>
+      <div class="tunnel">
+        <canvas id="windCanvas" aria-label="Simulazione: telo con guide laterali sotto vento crescente" role="img"></canvas>
+        <div class="tunnel-hud">
+          <div class="kmh"><span id="kmh">0</span><small>KM/H</small></div>
+          <div class="beau"><span class="mono" id="beauN">Beaufort 0</span><b id="beauName">Calma</b></div>
+        </div>
+        <div class="tunnel-ctl">
+          <label class="mono" for="windRange" style="color:var(--on-dark-2)">Velocità del vento</label>
+          <input type="range" id="windRange" min="0" max="110" value="20">
+          <div class="gauge" aria-hidden="true">
+            <div class="mk" style="left:63.6%">70 · Flex</div>
+            <div class="mk hi" style="left:81.8%">90 · Windy</div>
+          </div>
+          <div class="tunnel-row">
+            <div class="toggle" id="guideToggle" role="group" aria-label="Tipo di tenda">
+              <button type="button" data-v="1" aria-pressed="true">Con guide</button>
+              <button type="button" data-v="0" aria-pressed="false">Senza guide</button>
+            </div>
+            <div class="tunnel-status" id="windStatus"><i></i>Telo in tensione nelle guide</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TAX -->
+<section class="on-light solid tax" id="detrazione">
+  <div class="wrap">
+    <div class="tax-grid">
+      <div>
+        <div class="eyebrow">Detrazione fiscale 2026</div>
+        <h2 class="h2" style="margin-top:18px">Metà la paga <span class="serif">il fisco.</span></h2>
+        <p class="lead" style="margin-top:20px">Le tende da sole che migliorano l'efficienza della casa rientrano nelle detrazioni per schermature solari: 50% sull'abitazione principale, 36% sugli altri immobili, in 10 rate annuali. Ti seguiamo anche nella pratica ENEA.</p>
+        <ul class="req">
+          <li><span>Esposizione</span><span>Facciate a Est, Sud o Ovest. Esclusa la Nord.</span></li>
+          <li><span>Prestazione</span><span>Fattore solare g<sub>tot</sub> pari o inferiore a 0,35.</span></li>
+          <li><span>Pratica</span><span>Invio al portale ENEA entro 90 giorni dalla fine dei lavori.</span></li>
+          <li><span>Tetto di spesa</span><span>60.000 € per unità immobiliare.</span></li>
+        </ul>
+        <p class="small">Indicazioni generali sulla normativa 2026. Per la tua situazione verifica sempre con il tuo commercialista.</p>
+      </div>
+      <div class="calc" id="calc">
+        <div class="eyebrow">Calcola il risparmio</div>
+        <label for="spesa">Spesa prevista</label>
+        <div class="money"><span>€</span><input id="spesa" inputmode="numeric" value="12.000" aria-describedby="calcRes"></div>
+        <label>Immobile</label>
+        <div class="toggle" id="casaToggle" role="group" aria-label="Tipo di immobile">
+          <button type="button" data-v="0.5" aria-pressed="true">Prima casa · 50%</button>
+          <button type="button" data-v="0.36" aria-pressed="false">Altro · 36%</button>
+        </div>
+        <div class="res" id="calcRes" aria-live="polite">
+          <div><b id="detr">6.000 €</b><span>Detrazione totale</span></div>
+          <div><b id="rata">600 €</b><span>All'anno per 10 anni</span></div>
+          <div><b id="netto">6.000 €</b><span>Costo reale</span></div>
+          <div><b id="perc">−50%</b><span>Risparmio</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scallop bottom ink"></div>
+</section>
+
+<!-- WORKS -->
+<section class="works solid" id="lavori">
+  <div class="wrap">
+    <div class="works-head">
+      <div>
+        <div class="eyebrow">I nostri lavori</div>
+        <h2 class="h2" style="margin-top:18px">Ombra firmata <span class="serif" style="color:var(--sun)">Vertical House</span></h2>
+      </div>
+      <a class="btn btn-ghost" href="https://www.verticalhouse.it/i-nostri-lavori/" target="_blank" rel="noopener">Tutta la galleria</a>
+    </div>
+    <div class="wlist" id="wlist"></div>
+  </div>
+  <div class="peek" id="peek" aria-hidden="true"><img alt="" id="peekImg"><div class="fb" id="peekFb"></div></div>
+</section>
+
+<section class="partners solid" aria-label="Marchi trattati">
+  <div class="wrap"><span class="mono">I marchi con cui lavoriamo</span></div>
+  <div class="marquee"><div class="marquee-track" id="mq"></div><div class="marquee-track" aria-hidden="true" id="mq2"></div></div>
+</section>
+
+<!-- COMPANY -->
+<section class="on-light solid company" id="azienda">
+  <div class="wrap">
+    <div class="co-grid">
+      <div>
+        <div class="eyebrow">L'azienda</div>
+        <div class="year" style="margin-top:22px">1980<span class="serif">da un laboratorio ad Aprilia</span></div>
+        <figure class="ph workshop" data-reveal><img src="img/laboratorio.jpg" alt="Taglio su misura di un telo tecnico per tenda da sole in laboratorio" loading="lazy" decoding="async"><figcaption>Taglio teli su misura</figcaption></figure>
+      </div>
+      <div class="co-copy">
+        <p><strong>Vertical House nasce nel 1980 ad Aprilia</strong>, fondata da Giancarlo Martellacci e Katia Mancini. Da quel piccolo laboratorio è cresciuta anno dopo anno, con personale formato direttamente dai fondatori.</p>
+        <p>Oggi, insieme ai figli <strong>Vanni e Danilo</strong>, è un'azienda giovane e in continua evoluzione: macchinari d'avanguardia, materiali e tecnologie aggiornati, e un punto di riferimento regionale per produzione e assistenza di tendaggi e strutture.</p>
+        <p class="quote">Produzione industriale, criteri artigianali.</p>
+        <div class="facts">
+          <div><b>Produzione</b><span>Laboratori propri ad Aprilia</span></div>
+          <div><b>Assistenza</b><span>Prima e dopo l'installazione</span></div>
+          <div><b>Showroom</b><span>Aperto ogni giorno e presenti in Fiera</span></div>
+        </div>
+        <a class="showroom" href="https://www.google.com/maps/search/?api=1&query=Vertical+House+SRL+Via+dei+Rutuli+90+Aprilia" target="_blank" rel="noopener">
+          <span class="cube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <span><b>Vieni in showroom</b><span>Via dei Rutuli 90, Aprilia. Tocca i tessuti e prova i comandi dal vivo.</span></span>
+          <span class="mono" style="color:var(--sun)">Mappa ↗</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="scallop bottom ink2"></div>
+</section>
+
+<!-- PROCESS -->
+<section class="process solid" aria-label="Come lavoriamo">
+  <div class="wrap">
+    <div class="eyebrow">Come lavoriamo</div>
+    <h2 class="h2" style="margin-top:18px">Dal rilievo <span class="serif" style="color:var(--sun)">all'ombra.</span></h2>
+    <ol class="proc">
+      <li><h3>Consulenza</h3><p>In showroom scegli modello, tessuti e colori toccandoli con mano.</p></li>
+      <li><h3>Rilievo</h3><p>Prendiamo le misure sul posto e valutiamo esposizione e fissaggi.</p></li>
+      <li><h3>Produzione</h3><p>Realizziamo la tenda su misura nei nostri laboratori di Aprilia.</p></li>
+      <li><h3>Installazione</h3><p>Montaggio con la nostra squadra, pulito e collaudato.</p></li>
+      <li><h3>Assistenza</h3><p>Manutenzione, sostituzione teli e motori negli anni.</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact solid" id="contatti">
+  <div class="wrap">
+    <div class="eyebrow">Contatti</div>
+    <h2 class="big" style="margin-top:20px">Parliamo della tua <span class="serif">ombra.</span></h2>
+    <div class="ct-grid">
+      <form class="form" id="leadForm" novalidate>
+        <div class="field"><label for="fName">Nome</label><input id="fName" autocomplete="name" required></div>
+        <div class="field"><label for="fCity">Comune</label><input id="fCity" placeholder="Roma, Pomezia, Aprilia…"></div>
+        <div class="field full"><label for="fProd">Mi interessa</label>
+          <select id="fProd"><option>Pergola bioclimatica</option><option>Tenda da sole</option><option>Tenda antivento Windy / Tecnic</option><option>Vetrate panoramiche</option><option>Tettoia o gazebo</option><option>Zanzariere</option><option>Tende d'arredo</option><option>Arredo giardino</option><option>Assistenza / riparazione</option></select></div>
+        <div class="field full"><label for="fMsg">Messaggio</label><textarea id="fMsg" placeholder="Es. terrazzo 5×3 m esposto a sud, vorrei ombra e riparo dalla pioggia."></textarea></div>
+        <button class="btn btn-sun" type="submit">Prepara la richiesta <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>
+        <div class="sent" id="sent" hidden>
+          <p>Richiesta pronta. Inviala con un tocco, ti risponde direttamente l'ufficio.</p>
+          <div class="row"><a class="btn btn-sun" id="sentWa" href="https://wa.me/393791959057" target="_blank" rel="noopener">Invia su WhatsApp</a><button class="btn btn-ghost" type="button" id="sentCopy">Copia testo</button></div>
+        </div>
+      </form>
+      <div>
+        <div class="lines">
+          <div class="cline"><span class="mono">Telefono</span><a href="tel:+390692562411" class="v">06 925 6241</a><button class="copy" data-copy="06 925 6241">Copia</button></div>
+          <div class="cline"><span class="mono">WhatsApp</span><a href="https://wa.me/393791959057" target="_blank" rel="noopener">+39 379 195 9057</a><button class="copy" data-copy="+39 379 195 9057">Copia</button></div>
+          <div class="cline"><span class="mono">Email</span><span class="v">info@verticalhouse.it</span><button class="copy" data-copy="info@verticalhouse.it">Copia</button></div>
+          <div class="cline"><span class="mono">Showroom</span><a href="https://www.google.com/maps/search/?api=1&query=Vertical+House+SRL+Via+dei+Rutuli+90+Aprilia" target="_blank" rel="noopener">Via dei Rutuli 90, 04011 Aprilia (LT)</a><span class="mono" style="color:var(--sun)">Mappa ↗</span></div>
+        </div>
+        <div class="social">
+          <a href="https://www.instagram.com/verticalhouse.srl/" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.facebook.com/verticalhousesrl/" target="_blank" rel="noopener">Facebook</a>
+          <a href="https://www.tiktok.com/@verticalhouse.srl" target="_blank" rel="noopener">TikTok</a>
+          <a href="https://www.google.com/maps/place/Vertical+House+SRL/@41.6228394,12.5833225,15z" target="_blank" rel="noopener">Recensioni Google</a>
+        </div>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">Vertical House</div>
+    <div class="foot">
+      <span>© 2026 Vertical House S.r.l. · P.IVA 05796711009</span>
+      <span>Tende da sole a Roma, Pomezia e Aprilia</span>
+    </div>
+  </div>
+</section>
+</main>
+
+<a class="wa-float" href="https://wa.me/393791959057" target="_blank" rel="noopener" aria-label="Scrivici su WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.2-.2-.5-.3z"/></svg></a>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/geometries/RoundedBoxGeometry.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/math/SimplexNoise.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/SSAOShader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/MaskPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/SSAOPass.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
+const clamp=(v,a,b)=>Math.min(b,Math.max(a,v)), lerp=(a,b,t)=>a+(b-a)*t;
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isMobile=()=>innerWidth<=820;
+const fmt=(n,d=0)=>{const p=Math.abs(n).toFixed(d).split('.');return (n<0?'-':'')+p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.')+(p[1]?','+p[1]:'');};
+
+/* ================= STATE ================= */
+const STRUCT={
+  antracite:{name:'Antracite · RAL 7016',hex:0x383E42,css:'#383E42'},
+  bianco:{name:'Bianco · RAL 9010',hex:0xEDEBE3,css:'#EDEBE3'},
+  bronzo:{name:'Bronzo',hex:0x6B5A44,css:'#6B5A44'},
+  corten:{name:'Effetto corten',hex:0x8A4B2A,css:'#8A4B2A'}
+};
+const FABRIC={
+  petrolio:{name:'Blu petrolio',a:'#1F4B57'},
+  ecru:{name:'Écru',a:'#E3DCCB'},
+  perla:{name:'Grigio perla',a:'#B6BBB7'},
+  antracite:{name:'Antracite',a:'#3A3F42'},
+  rigatoRoma:{name:'Rigato classico',a:'#1F4B57',b:'#E8E4D8'},
+  rigatoVerde:{name:'Rigato verde',a:'#2E5B44',b:'#E8E4D8'}
+};
+const cfg={product:'pergola',struct:'antracite',fabric:'rigatoRoma',w:4.2,d:3.6,tw:4.0,tl:2.6,louver:.45,opts:new Set(['Motore radiocomandato','Illuminazione LED']),sera:false};
+
+const S={o1:0,o2:0,o3:0,o4:0,ph:1,louver:.12,screens:0,glass:0,awning:0,dusk:0,shift:.4,led:1,sx:1,sz:1,ax:1,al:3.0,cx:10.2,cy:3.2,cz:10.4,tx:-.4,ty:1.35,tz:-1.6};
+const T=Object.assign({},S);
+const PRESETS={
+  hero:   {o1:0,o2:0,o3:0,o4:0,ph:1,louver:.12,screens:0,glass:0,awning:0,dusk:0,  shift:.4,led:1,sx:1,sz:1,ax:1,al:3.0,cx:10.2,cy:3.2,cz:10.4,tx:-.4,ty:1.35,tz:-1.6},
+  pergola:{o1:.35,o2:0,o3:0,o4:0,ph:1,louver:.35,screens:0,glass:0,awning:0,dusk:.04,shift:.30,led:1,sx:1,sz:1,ax:1,al:3.0,cx:6.6,cy:2.2,cz:5.4,tx:1.5,ty:1.8,tz:-1.3},
+  awning: {o1:1,o2:1,o3:0,o4:0,ph:1,louver:.75,screens:0,glass:0,awning:1,dusk:.08,shift:.30,led:1,sx:1,sz:1,ax:1,al:3.0,cx:1.8,cy:2.3,cz:5.8,tx:-3.7,ty:1.4,tz:-1.5},
+  windy:  {o1:1,o2:0,o3:1,o4:0,ph:1,louver:1,  screens:1,glass:0,awning:1,dusk:.32,shift:.30,led:1,sx:1,sz:1,ax:1,al:3.0,cx:7.6,cy:2.0,cz:6.2,tx:1.6,ty:1.3,tz:-1.1},
+  vetrate:{o1:1,o2:0,o3:0,o4:1,ph:1,louver:1,  screens:0,glass:1,awning:0,dusk:.82,shift:.30,led:1,sx:1,sz:1,ax:1,al:3.0,cx:5.8,cy:1.7,cz:6.4,tx:1.8,ty:1.3,tz:-1.3}
+};
+function configPreset(){
+  const p=cfg.product, isT=p==='tenda';
+  const led=cfg.opts.has('Illuminazione LED')?1:0;
+  const base={o1:0,o2:0,o3:0,o4:0,ph:0,louver:isT?.8:cfg.louver,screens:p==='windy'?1:0,glass:p==='vetrate'?1:0,awning:isT?1:0,dusk:cfg.sera?.85:.06,shift:-.28,led,
+    sx:isT?1:cfg.w/4.2,sz:isT?1:cfg.d/3.6,ax:isT?cfg.tw/3.4:1,al:isT?cfg.tl:3.0};
+  const cam=isT?{cx:3.4,cy:2.7,cz:6.4,tx:-3.4,ty:1.3,tz:-1.4}:{cx:8.6+(cfg.w-4.2)*.6,cy:3.3+(cfg.d-3.6)*.3,cz:7.8+(cfg.d-3.6)*.9,tx:1.5,ty:1.2,tz:-1.0};
+  return Object.assign(base,cam);
+}
+let mode='hero';
+const chapters=document.getElementById('chapters');let stepsIn=false;
+new IntersectionObserver(es=>{stepsIn=es[0].isIntersecting;if(chapters)chapters.classList.toggle('on',stepsIn&&['pergola','awning','windy','vetrate'].includes(mode));},{rootMargin:'-40% 0px -40% 0px'}).observe(document.getElementById('prodotti'));
+function setMode(m){
+  mode=m;
+  if(chapters){chapters.classList.toggle('on',stepsIn&&['pergola','awning','windy','vetrate'].includes(m));chapters.querySelectorAll('a').forEach(a=>a.classList.toggle('on',a.dataset.ch===m));}
+  Object.assign(T, m==='config'?configPreset():PRESETS[m]);
+}
+
+/* ================= 3D SCENE ================= */
+let scene3d=null;
+function initScene(){
+  if(!window.THREE) throw new Error('no three');
+  const canvas=$('#scene');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance',stencil:false});
+  const mob=isMobile();
+  const HQ=!mob&&!!(THREE.EffectComposer&&THREE.SSAOPass&&THREE.UnrealBloomPass&&THREE.ShaderPass&&THREE.SimplexNoise);
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1, mob?1.5:(HQ?1.25:1.6)));
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure=.9;
+  renderer.shadowMap.enabled=true;
+  renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  const aniso=Math.min(8,renderer.capabilities.getMaxAnisotropy());
+
+  const scene=new THREE.Scene();
+  const fogDay=new THREE.Color(0xc9d6da), fogDusk=new THREE.Color(0x2b2c36);
+  scene.fog=new THREE.Fog(fogDay.clone(),34,110);
+  const camera=new THREE.PerspectiveCamera(30,1,.1,130);
+
+  /* ---------- sky (display colours, linearised when post-processing) ---------- */
+  const skyU={top:{value:new THREE.Color(0x3d74a3)},bot:{value:new THREE.Color(0xe6ecea)},dtop:{value:new THREE.Color(0x0c1424)},dbot:{value:new THREE.Color(0xe9905c)},dusk:{value:0},lin:{value:HQ?1:0}};
+  const sky=new THREE.Mesh(new THREE.SphereGeometry(110,40,20),new THREE.ShaderMaterial({side:THREE.BackSide,depthWrite:false,fog:false,uniforms:skyU,
+    vertexShader:'varying vec3 vP;void main(){vP=(modelMatrix*vec4(position,1.)).xyz;gl_Position=projectionMatrix*viewMatrix*vec4(vP,1.);}',
+    fragmentShader:'uniform vec3 top,bot,dtop,dbot;uniform float dusk,lin;varying vec3 vP;void main(){vec3 n=normalize(vP);float h=clamp(n.y*1.4+.03,0.,1.);vec3 d=mix(bot,top,pow(h,.7));vec3 e=mix(dbot,dtop,pow(h,.4));float sunG=pow(max(dot(n,normalize(vec3(-.7,.12,-.7))),0.),24.)*dusk;vec3 c=mix(d,e,dusk)+vec3(1.,.55,.25)*sunG*.6;gl_FragColor=vec4(lin>.5?pow(c,vec3(2.2)):c,1.);}'}));
+  scene.add(sky);
+
+  /* ---------- environment light (outdoor reflections) ---------- */
+  const pmrem=new THREE.PMREMGenerator(renderer);
+  function makeEnv(top,bot,ground,sunCol,sunDir,sunPow){
+    const es=new THREE.Scene();
+    const sg=new THREE.SphereGeometry(10,48,24),cp=sg.attributes.position,cols=[];
+    const T_=new THREE.Color(top).convertSRGBToLinear(),B_=new THREE.Color(bot).convertSRGBToLinear(),G_=new THREE.Color(ground).convertSRGBToLinear(),c=new THREE.Color();
+    for(let i=0;i<cp.count;i++){const h=cp.getY(i)/10;if(h>0)c.copy(B_).lerp(T_,Math.pow(h,.6));else c.copy(B_).multiplyScalar(.7).lerp(G_,Math.min(1,-h*4));cols.push(c.r,c.g,c.b);}
+    sg.setAttribute('color',new THREE.Float32BufferAttribute(cols,3));
+    es.add(new THREE.Mesh(sg,new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.BackSide})));
+    const sunM=new THREE.Mesh(new THREE.SphereGeometry(.7,16,8),new THREE.MeshBasicMaterial({color:new THREE.Color(sunCol).multiplyScalar(sunPow)}));
+    sunM.position.copy(sunDir).normalize().multiplyScalar(8);es.add(sunM);
+    const tex=pmrem.fromScene(es,.015).texture;return tex;
+  }
+  const envDay=makeEnv(0x4a7aa6,0xb9c4c6,0x6f6656,0xfff1dc,new THREE.Vector3(-4.5,12,7.5),30);
+  const envDusk=makeEnv(0x101a2c,0xd98a5c,0x2a2622,0xffa060,new THREE.Vector3(-11,3.6,6),25);
+  scene.environment=envDay;
+
+  /* ---------- procedural textures ---------- */
+  function ctex(w,h,draw,rep,srgb=true){const c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');draw(g,w,h);const t=new THREE.CanvasTexture(c);if(srgb)t.encoding=THREE.sRGBEncoding;t.anisotropy=aniso;if(rep){t.wrapS=t.wrapT=THREE.RepeatWrapping;t.repeat.set(rep[0],rep[1]);}return t;}
+  function grain(g,w,h,a){const id=g.getImageData(0,0,w,h),d=id.data;for(let i=0;i<d.length;i+=4){const n=(Math.random()-.5)*a;d[i]+=n;d[i+1]+=n;d[i+2]+=n;}g.putImageData(id,0,0);}
+  function travertine(g,w,h,bump){
+    const tones=bump?['#9a9a9a','#a2a2a2','#959595','#9e9e9e']:['#d6cbb6','#cfc3ad','#d9cfbb','#cbbfa8'];
+    const T=w/2;
+    for(let y=0;y<2;y++)for(let x=0;x<2;x++){g.fillStyle=tones[(x+y*2)%4];g.fillRect(x*T,y*T,T,T);}
+    for(let i=0;i<260;i++){const y=Math.random()*h;g.strokeStyle=bump?'rgba(60,60,60,'+(Math.random()*.25)+')':'rgba(150,132,104,'+(Math.random()*.16)+')';g.lineWidth=.5+Math.random()*2.2;g.beginPath();g.moveTo(0,y);g.bezierCurveTo(w*.3,y+Math.random()*16-8,w*.65,y+Math.random()*16-8,w,y+Math.random()*10-5);g.stroke();}
+    for(let i=0;i<900;i++){g.fillStyle=bump?'rgba(30,30,30,.5)':'rgba(140,120,95,.35)';const r=Math.random()*1.6;g.beginPath();g.arc(Math.random()*w,Math.random()*h,r,0,7);g.fill();}
+    grain(g,w,h,bump?26:12);
+    g.fillStyle=bump?'#3a3a3a':'#a39784';[0,T].forEach(o=>{g.fillRect(0,o,w,2);g.fillRect(o,0,2,h);});
+  }
+  const tileRep=[14/2.4,8/2.4];
+  const tileTex=ctex(1024,1024,(g,w,h)=>travertine(g,w,h,false),tileRep);
+  const tileBump=ctex(1024,1024,(g,w,h)=>travertine(g,w,h,true),tileRep,false);
+  const plaster=(bump)=>(g,w,h)=>{g.fillStyle=bump?'#808080':'#dccfba';g.fillRect(0,0,w,h);for(let i=0;i<2200;i++){g.fillStyle=bump?'rgba('+(Math.random()>.5?255:0)+','+(Math.random()>.5?255:0)+',128,.05)':'rgba(120,100,70,'+Math.random()*.05+')';const r=2+Math.random()*9;g.beginPath();g.arc(Math.random()*w,Math.random()*h,r,0,7);g.fill();}grain(g,w,h,bump?40:9);};
+  const wallTex=ctex(512,512,plaster(false),[6,2]);const wallBump=ctex(512,512,plaster(true),[6,2],false);
+  const grassTex=ctex(512,512,(g,w,h)=>{g.fillStyle='#55633f';g.fillRect(0,0,w,h);for(let i=0;i<9000;i++){g.strokeStyle='rgba('+(60+Math.random()*50|0)+','+(80+Math.random()*50|0)+','+(40+Math.random()*25|0)+',.55)';g.beginPath();const x=Math.random()*w,y=Math.random()*h;g.moveTo(x,y);g.lineTo(x+Math.random()*2-1,y-3-Math.random()*4);g.stroke();}},[70,70]);
+  const woodTex=ctex(512,128,(g,w,h)=>{g.fillStyle='#8a6446';g.fillRect(0,0,w,h);for(let i=0;i<90;i++){g.strokeStyle='rgba('+(70+Math.random()*40|0)+','+(45+Math.random()*25|0)+',28,.35)';g.lineWidth=Math.random()*2;g.beginPath();const y=Math.random()*h;g.moveTo(0,y);g.bezierCurveTo(w*.3,y+Math.random()*6-3,w*.6,y+Math.random()*6-3,w,y);g.stroke();}grain(g,w,h,10);});
+  const juteTex=ctex(256,256,(g,w,h)=>{g.fillStyle='#a8916c';g.fillRect(0,0,w,h);for(let y=0;y<h;y+=4)for(let x=0;x<w;x+=4){g.fillStyle=((x+y)/4)%2?'rgba(80,60,35,.22)':'rgba(255,240,210,.12)';g.fillRect(x,y,4,4);}grain(g,w,h,18);},[3,2]);
+  const linenTex=ctex(256,256,(g,w,h)=>{g.fillStyle='#ddd5c6';g.fillRect(0,0,w,h);for(let y=0;y<h;y+=2){g.fillStyle='rgba(0,0,0,'+(Math.random()*.05)+')';g.fillRect(0,y,w,1);}for(let x=0;x<w;x+=2){g.fillStyle='rgba(255,255,255,'+(Math.random()*.06)+')';g.fillRect(x,0,1,h);}grain(g,w,h,8);},[2,2]);
+  const potTex=ctex(256,256,(g,w,h)=>{g.fillStyle='#a5603f';g.fillRect(0,0,w,h);for(let i=0;i<500;i++){g.fillStyle='rgba('+(Math.random()>.5?'230,190,150':'90,45,25')+','+Math.random()*.12+')';g.beginPath();g.arc(Math.random()*w,Math.random()*h,Math.random()*8,0,7);g.fill();}grain(g,w,h,14);});
+  const fabricCanvas=document.createElement('canvas');fabricCanvas.width=1024;fabricCanvas.height=128;
+  const fabricTex=new THREE.CanvasTexture(fabricCanvas);fabricTex.encoding=THREE.sRGBEncoding;fabricTex.wrapS=fabricTex.wrapT=THREE.RepeatWrapping;fabricTex.anisotropy=aniso;
+  function drawFabric(key){
+    const f=FABRIC[key],g=fabricCanvas.getContext('2d'),w=1024,h=128;
+    if(f.b){const n=14;for(let i=0;i<n;i++){g.fillStyle=i%2?f.b:f.a;g.fillRect(i*w/n,0,w/n+1,h);}}else{g.fillStyle=f.a;g.fillRect(0,0,w,h);}
+    for(let y=0;y<h;y+=2){g.fillStyle='rgba(0,0,0,'+(.04+Math.random()*.05)+')';g.fillRect(0,y,w,1);}
+    for(let x=0;x<w;x+=3){g.fillStyle='rgba(255,255,255,'+(Math.random()*.05)+')';g.fillRect(x,0,1,h);}
+    fabricTex.needsUpdate=true;
+  }
+  drawFabric(cfg.fabric);
+  const blobTex=ctex(128,128,(g,w,h)=>{const r=g.createRadialGradient(64,64,4,64,64,64);r.addColorStop(0,'rgba(0,0,0,.55)');r.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=r;g.fillRect(0,0,w,h);},null,false);
+
+  /* ---------- materials ---------- */
+  const M={
+    struct:new THREE.MeshStandardMaterial({color:STRUCT[cfg.struct].hex,metalness:.55,roughness:.34,envMapIntensity:1.1}),
+    frame:new THREE.MeshStandardMaterial({color:0x22282c,metalness:.6,roughness:.32}),
+    fabric:new THREE.MeshStandardMaterial({map:fabricTex,roughness:.88,side:THREE.DoubleSide,envMapIntensity:.6}),
+    screen:new THREE.MeshStandardMaterial({map:fabricTex,roughness:.9,side:THREE.DoubleSide,transparent:true,opacity:.9,envMapIntensity:.5}),
+    glass:new THREE.MeshStandardMaterial({color:0xe2ecee,metalness:.92,roughness:.03,transparent:true,opacity:.16,side:THREE.DoubleSide,depthWrite:false,envMapIntensity:2.4}),
+    win:new THREE.MeshStandardMaterial({color:0x0f171b,roughness:.04,metalness:.9,envMapIntensity:1.6,emissive:new THREE.Color(0xffad5a),emissiveIntensity:0}),
+    tile:new THREE.MeshStandardMaterial({map:tileTex,bumpMap:tileBump,bumpScale:.0035,roughness:.5,envMapIntensity:.55}),
+    wall:new THREE.MeshStandardMaterial({map:wallTex,bumpMap:wallBump,bumpScale:.006,roughness:.96,envMapIntensity:.6}),
+    grass:new THREE.MeshStandardMaterial({map:grassTex,roughness:1,envMapIntensity:.4}),
+    linen:new THREE.MeshStandardMaterial({map:linenTex,roughness:1,envMapIntensity:.7}),
+    pillowA:new THREE.MeshStandardMaterial({color:0x6d7558,roughness:1}),
+    pillowB:new THREE.MeshStandardMaterial({color:0xb8a588,roughness:1}),
+    teak:new THREE.MeshStandardMaterial({map:woodTex,roughness:.62,envMapIntensity:.8}),
+    stone:new THREE.MeshStandardMaterial({map:tileTex,roughness:.45,envMapIntensity:.7}),
+    jute:new THREE.MeshStandardMaterial({map:juteTex,roughness:1}),
+    pot:new THREE.MeshStandardMaterial({map:potTex,roughness:.9}),
+    soil:new THREE.MeshStandardMaterial({color:0x3a2c20,roughness:1}),
+    leaf:[0x3f5530,0x34492a,0x4b6238].map(c=>new THREE.MeshStandardMaterial({color:c,roughness:.82,envMapIntensity:.6})),
+    olive:[0x66735a,0x57644c,0x76826a].map(c=>new THREE.MeshStandardMaterial({color:c,roughness:.75,envMapIntensity:.7})),
+    pine:[0x34472c,0x3e5233,0x2d3f27].map(c=>new THREE.MeshStandardMaterial({color:c,roughness:.95})),
+    cypress:new THREE.MeshStandardMaterial({color:0x26382a,roughness:1,flatShading:true}),
+    lavender:new THREE.MeshStandardMaterial({color:0x8e86a8,roughness:1}),
+    lavLeaf:new THREE.MeshStandardMaterial({color:0x7d8a72,roughness:1}),
+    trunk:new THREE.MeshStandardMaterial({color:0x5b4636,roughness:1}),
+    hill:new THREE.MeshStandardMaterial({color:0x6c7a5c,roughness:1}),
+    led:new THREE.MeshStandardMaterial({color:0x111111,emissive:new THREE.Color(0xffc47e),emissiveIntensity:0}),
+    blob:new THREE.MeshBasicMaterial({map:blobTex,transparent:true,depthWrite:false})
+  };
+  const R=(w,h,d,r,seg)=>THREE.RoundedBoxGeometry?new THREE.RoundedBoxGeometry(w,h,d,seg||3,Math.min(r,w/2-.001,h/2-.001,d/2-.001)):new THREE.BoxGeometry(w,h,d);
+  function mesh(geo,mat,x,y,z,cast=true,recv=true){const m=new THREE.Mesh(geo,mat);m.position.set(x||0,y||0,z||0);m.castShadow=cast;m.receiveShadow=recv;return m;}
+  function box(w,h,d,mat,x,y,z,cast,recv){return mesh(new THREE.BoxGeometry(w,h,d),mat,x,y,z,cast,recv);}
+  function rbox(w,h,d,r,mat,x,y,z,cast,recv){return mesh(R(w,h,d,r),mat,x,y,z,cast,recv);}
+  function blob(x,z,sx,sz,parent){const m=new THREE.Mesh(new THREE.PlaneGeometry(1,1),M.blob);m.rotation.x=-Math.PI/2;m.position.set(x,.012,z);m.scale.set(sx,sz,1);(parent||scene).add(m);return m;}
+  const rnd=(a,b)=>a+Math.random()*(b-a);
+
+  /* ---------- ground, landscape ---------- */
+  const ground=new THREE.Mesh(new THREE.PlaneGeometry(260,260),M.grass);ground.rotation.x=-Math.PI/2;ground.position.y=-.03;ground.receiveShadow=true;scene.add(ground);
+  [[-30,-60,40,7],[10,-70,55,9],[45,-55,38,6],[-60,-40,40,8],[70,-30,35,5]].forEach(([x,z,r,h])=>{const m=new THREE.Mesh(new THREE.SphereGeometry(r,32,12),M.hill);m.scale.y=h/r;m.position.set(x,-1,z);scene.add(m);});
+  const terrace=mesh(new THREE.BoxGeometry(14,.08,8),M.tile,-1,-.02,1,false,true);scene.add(terrace);
+  scene.add(rbox(14.3,.12,.3,.03,M.stone,-1,.04,5.1,true,true));
+  scene.add(mesh(new THREE.BoxGeometry(16,4.4,.4),M.wall,-1,2.2,-3.2));
+  scene.add(rbox(16.2,.14,.56,.04,M.stone,-1,4.47,-3.2));
+  // openings
+  function opening(x,y,w,h,mul){
+    scene.add(rbox(w+.18,h+.12,.08,.015,M.frame,x,y,-2.98,false,false));
+    scene.add(box(w,h,.07,M.win,x,y-.02,-2.95,false,false));
+    for(let i=1;i<mul;i++)scene.add(box(.05,h,.1,M.frame,x-w/2+w*i/mul,y-.02,-2.92,false,false));
+    scene.add(box(w+.3,.05,.22,M.stone,x,y-h/2-.06,-2.9,false,true));
+  }
+  opening(1.8,1.2,2.3,2.38,2);opening(-3.6,1.16,2.7,2.3,2);opening(-7.2,2.05,1.3,1.3,2);
+  // terrace edge planters with lavender
+  function lavender(x,z,n){for(let i=0;i<n;i++){const g=new THREE.Group();g.position.set(x+rnd(-.25,.25),0,z+rnd(-.25,.25));const b=new THREE.Mesh(new THREE.SphereGeometry(rnd(.28,.38),10,8),M.lavLeaf);b.scale.y=.7;b.position.y=.22;b.castShadow=true;b.receiveShadow=true;g.add(b);
+    for(let k=0;k<14;k++){const f=new THREE.Mesh(new THREE.CylinderGeometry(.012,.02,.22,4),M.lavender);const a=Math.random()*6.28,r=Math.random()*.26;f.position.set(Math.cos(a)*r,.45+Math.random()*.1,Math.sin(a)*r);f.rotation.set(rnd(-.3,.3),0,rnd(-.3,.3));g.add(f);}scene.add(g);}}
+  for(let z=-2.2;z<4.6;z+=.85)lavender(6.35,z,1);
+  for(let z=-2.2;z<4.6;z+=.85)lavender(-8.35,z,1);
+
+  /* ---------- PERGOLA ---------- */
+  const W=4.2,D=3.6,H=2.6;
+  const P=new THREE.Group();P.position.set(1.8,0,-2.98);scene.add(P);
+  const PI=new THREE.Group();PI.position.z=D/2;P.add(PI);
+  [[-W/2,D/2],[W/2,D/2],[-W/2,-D/2+.08],[W/2,-D/2+.08]].forEach(([x,z])=>{PI.add(rbox(.15,H,.15,.012,M.struct,x,H/2,z));PI.add(rbox(.24,.02,.24,.008,M.struct,x,.01,z));});
+  PI.add(rbox(W+.15,.27,.15,.012,M.struct,0,H-.135,D/2));
+  PI.add(rbox(W+.15,.27,.15,.012,M.struct,0,H-.135,-D/2+.08));
+  PI.add(rbox(.15,.27,D,.012,M.struct,-W/2,H-.135,0));
+  PI.add(rbox(.15,.27,D,.012,M.struct,W/2,H-.135,0));
+  [[0,D/2-.085,W-.2,.02],[0,-D/2+.165,W-.2,.02]].forEach(([x,z,w,d])=>PI.add(box(w,.018,d,M.led,x,H-.272,z,false,false)));
+  [[-W/2+.085,0],[W/2-.085,0]].forEach(([x,z])=>PI.add(box(.02,.018,D-.24,M.led,x,H-.272,z,false,false)));
+  const NL=18,louvers=[],sp=(D-.2)/NL;
+  const lsh=new THREE.Shape(),lw=sp*1.1/2,lt=.03;
+  lsh.moveTo(-lw,0);lsh.quadraticCurveTo(0,lt,lw,0);lsh.quadraticCurveTo(0,-lt*.55,-lw,0);
+  const lgeo=new THREE.ExtrudeGeometry(lsh,{depth:W-.2,bevelEnabled:false,curveSegments:8});lgeo.rotateY(Math.PI/2);lgeo.translate(-(W-.2)/2,0,0);
+  for(let i=0;i<NL;i++){const l=mesh(lgeo,M.struct,0,H-.11,-D/2+.1+sp*(i+.5));PI.add(l);louvers.push(l);}
+  const pl=new THREE.PointLight(0xffb36b,0,9,1.8);pl.position.set(0,H-.45,0);PI.add(pl);
+  const pl2=new THREE.PointLight(0xffa858,0,7,1.8);pl2.position.set(-3.6,2.2,-1.6);scene.add(pl2);
+  // vertical screens (Windy)
+  const SH=H-.32,screens=[];
+  function addScreen(w,x,z,ry){
+    const g=new THREE.Group();g.position.set(x,H-.27,z);g.rotation.y=ry;
+    const geo=new THREE.PlaneGeometry(w,SH,24,12);const pos=geo.attributes.position;
+    const m=new THREE.Mesh(geo,M.screen);m.position.y=-SH/2;m.castShadow=true;m.receiveShadow=true;g.add(m);
+    PI.add(g);
+    const cas=rbox(w+.04,.12,.14,.02,M.struct,x,H-.2,z);cas.rotation.y=ry;PI.add(cas);
+    const bar=rbox(w,.05,.06,.015,M.struct,0,0,0,true,false);bar.rotation.y=ry;PI.add(bar);
+    screens.push({g,bar,x,z,w,ry,m,pos,base:Float32Array.from(pos.array)});
+  }
+  addScreen(W-.16,0,D/2+.01,0);addScreen(D-.2,-W/2-.01,.04,Math.PI/2);addScreen(D-.2,W/2+.01,.04,-Math.PI/2);
+  // glass panels
+  const glassPanels=[];const GH=H-.34;
+  function addGlassRun(count,len,origin,axis,z,ry){
+    const pw=len/count+.03;
+    for(let i=0;i<count;i++){
+      const g=new THREE.Group();const m=new THREE.Mesh(new THREE.PlaneGeometry(pw,GH),M.glass);m.position.y=GH/2+.03;g.add(m);
+      const fr=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.PlaneGeometry(pw,GH)),new THREE.LineBasicMaterial({color:0x8d979c,transparent:true,opacity:.7}));fr.position.copy(m.position);g.add(fr);
+      g.rotation.y=ry;PI.add(g);
+      glassPanels.push({g,axis,closed:origin+pw*(i+.5)-.015*i,open:origin+len-pw*.5-i*.02,fixed:z+i*.025*(axis==='x'?1:-1)*(ry?-1:1)});
+    }
+  }
+  addGlassRun(4,W-.16,-W/2+.08,'x',D/2-.12,0);addGlassRun(3,D-.3,-D/2+.18,'z',-W/2+.12,Math.PI/2);addGlassRun(3,D-.3,-D/2+.18,'z',W/2-.12,-Math.PI/2);
+  const tracks=[box(W-.1,.04,.12,M.struct,0,.02,D/2-.1,false,true),box(W-.1,.04,.12,M.struct,0,H-.31,D/2-.1,false,false)];tracks.forEach(t=>PI.add(t));
+
+  /* ---------- AWNING ---------- */
+  const A=new THREE.Group();A.position.set(-3.6,0,-3.0);scene.add(A);
+  A.add(rbox(3.5,.22,.26,.06,M.struct,0,2.98,.13));
+  const F=new THREE.Group();F.position.set(0,2.9,.22);F.rotation.x=.3;A.add(F);
+  const FG=new THREE.Group();F.add(FG);
+  const fgeo=new THREE.PlaneGeometry(3.3,1,24,10);fgeo.rotateX(-Math.PI/2);fgeo.translate(0,0,.5);
+  { const p=fgeo.attributes.position; for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i);p.setY(i,-Math.sin(Math.PI*z)*.035-Math.cos(x/3.3*Math.PI)*.004);} fgeo.computeVertexNormals(); }
+  const fabMesh=new THREE.Mesh(fgeo,M.fabric);fabMesh.castShadow=true;fabMesh.receiveShadow=true;FG.add(fabMesh);
+  const fbar=rbox(3.42,.08,.1,.02,M.struct,0,0,0,true,false);F.add(fbar);
+  const vshape=new THREE.Shape();vshape.moveTo(-1.65,0);vshape.lineTo(1.65,0);vshape.lineTo(1.65,-.16);
+  for(let i=0;i<=22;i++){const x=1.65-i*(3.3/22);vshape.quadraticCurveTo(x-3.3/44,-.26,x-3.3/22,-.16);}
+  vshape.lineTo(-1.65,0);
+  const vgeo=new THREE.ShapeGeometry(vshape,4);{const uv=vgeo.attributes.uv,ps=vgeo.attributes.position;for(let i=0;i<uv.count;i++){uv.setXY(i,(ps.getX(i)+1.65)/3.3,(ps.getY(i)+.26)/.26);}}
+  const valance=new THREE.Mesh(vgeo,M.fabric);valance.castShadow=true;F.add(valance);
+  fabricTex.repeat.set(1,1);
+  const arms=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,1,10),M.struct);m.castShadow=true;scene.add(m);return m;});
+  const elbows=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.05,10,8),M.struct);m.castShadow=true;scene.add(m);return m;});
+  const arms2=[0,1].map(()=>{const m=new THREE.Mesh(new THREE.CylinderGeometry(.028,.028,1,10),M.struct);m.castShadow=true;scene.add(m);return m;});
+  const armBase=[new THREE.Vector3(-1.45,2.5,-2.86),new THREE.Vector3(1.45,2.5,-2.86)];
+
+  /* ---------- furniture ---------- */
+  const sofa=new THREE.Group();sofa.position.set(1.8,0,-2.25);scene.add(sofa);
+  sofa.add(rbox(2.62,.14,.96,.03,M.teak,0,.16,0));
+  [-1.24,1.24].forEach(x=>sofa.add(rbox(.12,.5,.96,.03,M.teak,x,.36,0)));
+  [-.64,.64].forEach(x=>sofa.add(rbox(1.22,.2,.84,.08,M.linen,x,.33,.04)));
+  [-.64,.64].forEach(x=>{const b=rbox(1.2,.52,.2,.09,M.linen,x,.66,-.35);b.rotation.x=-.12;sofa.add(b);});
+  [[-.9,M.pillowA],[-.35,M.pillowB],[.55,M.pillowA]].forEach(([x,mt])=>{const c=rbox(.42,.4,.13,.06,mt,x,.62,-.18);c.rotation.set(-.2,rnd(-.15,.15),rnd(-.08,.08));sofa.add(c);});
+  blob(1.8,-2.2,3.4,1.5);
+  const rug=new THREE.Mesh(new THREE.PlaneGeometry(3,2.1),M.jute);rug.rotation.x=-Math.PI/2;rug.position.set(1.8,.022,-1.3);rug.receiveShadow=true;scene.add(rug);
+  scene.add(rbox(1.15,.06,.66,.02,M.stone,1.8,.4,-1.2));
+  scene.add(rbox(1.05,.04,.56,.01,M.teak,1.8,.14,-1.2));
+  [[-.5,-.27],[.5,-.27],[-.5,.27],[.5,.27]].forEach(([x,z])=>scene.add(rbox(.05,.38,.05,.01,M.teak,1.8+x,.19,-1.2+z)));
+  blob(1.8,-1.2,1.6,1);
+  const bowl=new THREE.Mesh(new THREE.SphereGeometry(.16,24,10,0,Math.PI*2,Math.PI/2,Math.PI/2),M.pot);bowl.rotation.x=Math.PI;bowl.position.set(1.65,.58,-1.18);bowl.scale.y=.45;bowl.castShadow=true;scene.add(bowl);
+  const chair=new THREE.Group();chair.position.set(.2,0,-.45);chair.rotation.y=.75;scene.add(chair);
+  chair.add(rbox(.86,.14,.86,.03,M.teak,0,.16,0));[-.4,.4].forEach(x=>chair.add(rbox(.08,.46,.86,.03,M.teak,x,.36,0)));
+  chair.add(rbox(.72,.2,.76,.08,M.linen,0,.33,.04));chair.add(rbox(.72,.5,.18,.08,M.linen,0,.64,-.34));blob(.2,-.45,1.3,1.3);
+  // bistro set
+  const bistro=new THREE.Group();bistro.position.set(-3.6,0,-1.55);scene.add(bistro);
+  const ttop=new THREE.Mesh(new THREE.CylinderGeometry(.42,.42,.035,40),M.stone);ttop.position.y=.75;ttop.castShadow=ttop.receiveShadow=true;bistro.add(ttop);
+  const stem=new THREE.Mesh(new THREE.CylinderGeometry(.03,.03,.74,10),M.frame);stem.position.y=.37;stem.castShadow=true;bistro.add(stem);
+  const foot=new THREE.Mesh(new THREE.CylinderGeometry(.22,.24,.03,24),M.frame);foot.position.y=.015;bistro.add(foot);
+  [-.78,.78].forEach(x=>{const c=new THREE.Group();c.position.set(x,0,0);c.rotation.y=x>0?-Math.PI/2:Math.PI/2;bistro.add(c);
+    c.add(rbox(.46,.05,.46,.015,M.teak,0,.46,0));c.add(rbox(.46,.32,.04,.015,M.teak,0,.72,-.21));
+    [[-.2,-.2],[.2,-.2],[-.2,.2],[.2,.2]].forEach(([a,b])=>c.add(rbox(.03,.46,.03,.01,M.frame,a,.23,b)));});
+  blob(-3.6,-1.55,2.4,1.2);
+  // pots + olive trees
+  const potGeo=new THREE.LatheGeometry([[0,0],[.2,0],[.24,.06],[.3,.35],[.33,.6],[.36,.66],[.34,.7],[0,.7]].map(([x,y])=>new THREE.Vector2(x,y)),28);
+  function leafCluster(group,cx,cy,cz,r,n,mats,spread){for(let i=0;i<n;i++){const m=new THREE.Mesh(new THREE.IcosahedronGeometry(r*rnd(.6,1),0),mats[i%mats.length]);m.position.set(cx+rnd(-spread,spread),cy+rnd(-spread*.5,spread*.6),cz+rnd(-spread,spread));m.scale.set(1,rnd(.6,.85),1);m.rotation.set(rnd(0,3),rnd(0,3),0);m.castShadow=true;m.receiveShadow=true;group.add(m);}}
+  function potted(x,z,s,kind){const g=new THREE.Group();g.position.set(x,0,z);g.scale.setScalar(s);scene.add(g);
+    const p=new THREE.Mesh(potGeo,M.pot);p.castShadow=p.receiveShadow=true;g.add(p);const so=new THREE.Mesh(new THREE.CircleGeometry(.32,24),M.soil);so.rotation.x=-Math.PI/2;so.position.y=.66;g.add(so);
+    if(kind==='olive'){const t=new THREE.Mesh(new THREE.CylinderGeometry(.03,.05,1.1,7),M.trunk);t.position.y=1.15;t.rotation.z=.08;t.castShadow=true;g.add(t);leafCluster(g,0,1.95,0,.11,46,M.olive,.48);}
+    else leafCluster(g,0,.95,0,.12,34,M.leaf,.26);
+    blob(x,z,1.1*s,1.1*s);}
+  potted(4.55,-2.5,1.05,'olive');potted(-1.25,-2.55,1,'olive');potted(-6.0,-2.5,1.1,'olive');potted(-5.2,-2.55,.75,'bush');potted(5.4,1.6,.9,'bush');potted(-7.4,2.8,1.2,'olive');
+  // Roman landscape: umbrella pines + cypresses
+  function pine(x,z,s){const g=new THREE.Group();g.position.set(x,0,z);g.scale.setScalar(s);scene.add(g);
+    const curve=new THREE.CatmullRomCurve3([new THREE.Vector3(0,0,0),new THREE.Vector3(.25,1.8,.05),new THREE.Vector3(-.1,3.8,0),new THREE.Vector3(.35,5.2,.1)]);
+    const t=new THREE.Mesh(new THREE.TubeGeometry(curve,20,.2,8,false),M.trunk);t.castShadow=true;g.add(t);
+    for(let i=0;i<16;i++){const a=i/16*6.28+rnd(0,.4),r=i<5?rnd(0,.8):rnd(1.2,2.4);const c=new THREE.Mesh(new THREE.IcosahedronGeometry(rnd(1,1.5),1),M.pine[i%3]);c.position.set(.35+Math.cos(a)*r,5.5+rnd(-.15,.35),Math.sin(a)*r);c.scale.set(1,.42,1);c.castShadow=true;g.add(c);}}
+  function cypress(x,z,s){const g=new THREE.Group();g.position.set(x,0,z);g.scale.setScalar(s);scene.add(g);
+    const geo=new THREE.LatheGeometry([[0,0],[.35,.3],[.62,1.6],[.6,3.2],[.42,4.8],[.18,5.9],[0,6.4]].map(([a,b])=>new THREE.Vector2(a,b)),12,0,Math.PI*2);
+    const p=geo.attributes.position;for(let i=0;i<p.count;i++){const k=1+(Math.random()-.5)*.18;p.setX(i,p.getX(i)*k);p.setZ(i,p.getZ(i)*k);}geo.computeVertexNormals();
+    const m=new THREE.Mesh(geo,M.cypress);m.castShadow=true;g.add(m);}
+  pine(-12,-14,1.1);pine(-4.5,-19,1.25);pine(8.5,-15,1);pine(16,-9,1.15);pine(-19,-6,1);pine(24,-20,1.2);pine(-28,-18,1.1);
+  cypress(-9.2,-8.5,1);cypress(-10.3,-9.4,.92);cypress(11.5,-6.5,1.05);cypress(12.5,-7.2,.95);cypress(4.2,-10.5,1.1);cypress(20,-12,1);cypress(-16,-12,1.05);
+
+  /* ---------- lights ---------- */
+  const hemi=new THREE.HemisphereLight(0xdbe6ee,0x5e5444,.18);scene.add(hemi);
+  const sun=new THREE.DirectionalLight(0xffe9c8,3.6);
+  sun.castShadow=true;const sm=mob?1024:(HQ?4096:2048);sun.shadow.mapSize.set(sm,sm);
+  Object.assign(sun.shadow.camera,{left:-11,right:11,top:11,bottom:-11,near:1,far:55});
+  sun.shadow.bias=-.00025;sun.shadow.normalBias=.025;sun.shadow.radius=3;
+  sun.target.position.set(0,0,-1);scene.add(sun);scene.add(sun.target);
+  const sunDay=new THREE.Vector3(-4.5,12,7.5),sunDusk=new THREE.Vector3(-11,3.6,6);
+  const cDay=new THREE.Color(0xffe9c8),cDusk=new THREE.Color(0xff9150);
+
+  /* ---------- post-processing ---------- */
+  let composer=null,ssao=null,bloom=null,grade=null;
+  if(HQ){
+    try{
+      composer=new THREE.EffectComposer(renderer);
+      ssao=new THREE.SSAOPass(scene,camera,innerWidth,innerHeight);
+      ssao.kernelRadius=.55;ssao.minDistance=.00012;ssao.maxDistance=.005;ssao.output=THREE.SSAOPass.OUTPUT.Default;
+      composer.addPass(ssao);
+      bloom=new THREE.UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.18,.55,.86);
+      composer.addPass(bloom);
+      grade=new THREE.ShaderPass({uniforms:{tDiffuse:{value:null},time:{value:0},vig:{value:.32},warm:{value:0}},
+        vertexShader:'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+        fragmentShader:'uniform sampler2D tDiffuse;uniform float time,vig,warm;varying vec2 vUv;'+
+          'float h(vec2 p){return fract(sin(dot(p,vec2(12.9898,78.233)))*43758.5453);}'+
+          'vec3 toS(vec3 c){return mix(c*12.92,1.055*pow(c,vec3(1./2.4))-.055,step(.0031308,c));}'+
+          'void main(){vec2 d=vUv-.5;float ca=.0009*length(d)*2.;vec3 c;c.r=texture2D(tDiffuse,vUv+d*ca).r;c.g=texture2D(tDiffuse,vUv).g;c.b=texture2D(tDiffuse,vUv-d*ca).b;'+
+          'c=toS(max(c,0.));c=mix(c,c*vec3(1.04,1.,.93),.5+warm*.5);c=(c-.5)*1.1+.5;float l=dot(c,vec3(.299,.587,.114));c=mix(vec3(l),c,1.08);'+
+          'c*=1.-vig*dot(d,d)*2.1;c+=(h(vUv*vec2(1280.,720.)+fract(time))-.5)*.024;gl_FragColor=vec4(c,1.);}'});
+      grade.renderToScreen=true;composer.addPass(grade);
+    }catch(e){composer=null;}
+  }
+  if(HQ&&composer)sky.material.uniforms.lin.value=1;else sky.material.uniforms.lin.value=0;
+
+  /* ---------- runtime ---------- */
+  const camPos=new THREE.Vector3(),camTgt=new THREE.Vector3(),v1=new THREE.Vector3(),v2=new THREE.Vector3(),up=new THREE.Vector3(0,1,0),q=new THREE.Quaternion();
+  let vw=1,vh=1;
+  function resize(){vw=innerWidth;vh=innerHeight;renderer.setSize(vw,vh,false);if(composer){composer.setSize(vw,vh);}}
+  resize();addEventListener('resize',resize);
+  let envIsDusk=false;const perf={n:0,acc:0,last:0};
+
+  function apply(time){
+    P.scale.set(S.sx,1,S.sz);
+    const ang=(1-S.louver)*1.42;
+    for(let i=0;i<NL;i++)louvers[i].rotation.x=ang;
+    const sc=Math.max(.001,S.screens);
+    screens.forEach((s,i)=>{s.g.scale.y=sc;s.g.visible=S.screens>.004;
+      const br=new THREE.Vector3(s.x,H-.27-SH*sc,s.z);s.bar.position.copy(br);s.bar.visible=S.screens>.004;
+      if(S.screens>.3){const a=s.pos.array,b=s.base;const amp=.035*S.screens*(1+S.dusk);for(let k=0;k<a.length;k+=3){const xx=b[k],yy=b[k+1];const u=(yy/SH)+.5;a[k+2]=Math.sin(time*1.6+xx*1.3+i)*amp*Math.sin(Math.PI*(1-u))*(1-Math.abs(xx/(s.w/2))*.6);}s.pos.needsUpdate=true;}
+    });
+    const gl=S.glass;
+    glassPanels.forEach(p=>{p.g.visible=gl>.004;const v=lerp(p.open,p.closed,gl);if(p.axis==='x')p.g.position.set(v,0,p.fixed);else p.g.position.set(p.fixed,0,v);});
+    tracks.forEach(t=>t.visible=gl>.004);
+    const L=Math.max(.001,S.awning*S.al);
+    A.scale.x=S.ax;FG.scale.z=L;fbar.position.set(0,-.02,L);valance.position.set(0,-.03,L+.05);
+    F.rotation.x=.22+.1*S.awning;
+    fabMesh.visible=valance.visible=S.awning>.004;
+    A.updateMatrixWorld(true);
+    for(let i=0;i<2;i++){const sx=i?1.45:-1.45;const end=fbar.localToWorld(v1.set(sx,0,0)).clone();const a=armBase[i].clone();a.x=A.position.x+armBase[i].x*S.ax;
+      const mid=a.clone().add(end).multiplyScalar(.5);const span=a.distanceTo(end);const fold=Math.sqrt(Math.max(0,1.55*1.55-(span/2)*(span/2)));
+      mid.x+=(i?-1:1)*fold*S.ax;mid.y-=fold*.08;
+      [[a,mid,arms[i]],[mid,end,arms2[i]]].forEach(([p0,p1,m])=>{const dir=p1.clone().sub(p0);const len=dir.length();m.position.copy(p0).add(p1).multiplyScalar(.5);m.scale.set(1,Math.max(.001,len),1);q.setFromUnitVectors(up,dir.normalize());m.quaternion.copy(q);m.visible=S.awning>.03;});
+      elbows[i].position.copy(mid);elbows[i].visible=S.awning>.03;}
+    const k=S.dusk;
+    skyU.dusk.value=k;
+    scene.fog.color.copy(fogDay).lerp(fogDusk,k);
+    sun.position.copy(sunDay).lerp(sunDusk,k);sun.color.copy(cDay).lerp(cDusk,k);sun.intensity=lerp(3.6,.5,k)*(.25+.75*introK);
+    hemi.intensity=lerp(.18,.12,k);
+    const wantDusk=k>.5;if(wantDusk!==envIsDusk){scene.environment=wantDusk?envDusk:envDay;envIsDusk=wantDusk;}
+    renderer.toneMappingExposure=lerp(.84,1.05,k)*(.35+.65*introK);
+    M.win.emissiveIntensity=k*.9;
+    const lk=clamp((k-.25)/.6,0,1)*S.led;
+    M.led.emissiveIntensity=lk*3.2;
+    pl.intensity=lk*1.6;pl2.intensity=clamp((k-.4)/.5,0,1)*S.awning*1.1;
+    if(bloom){bloom.strength=.12+k*.55;bloom.threshold=lerp(.9,.62,k);}
+    if(grade){grade.uniforms.time.value=time;grade.uniforms.warm.value=k;}
+    camPos.set(S.cx,S.cy,S.cz);camTgt.set(S.tx,S.ty,S.tz);
+    const dolly=1+(1-introK)*.55;camPos.sub(camTgt).multiplyScalar((isMobile()?1.3:1)*dolly).add(camTgt);
+    if(isMobile())camPos.y+=.3;camPos.y+=(1-introK)*1.6;
+    camPos.x+=Math.sin(time*.21)*.1;camPos.y+=Math.sin(time*.17)*.05;
+    camera.position.copy(camPos);camera.lookAt(camTgt);
+    const sh=isMobile()?0:S.shift,kk=Math.abs(sh),fw=vw*(1+kk);
+    camera.aspect=fw/vh;camera.setViewOffset(fw,vh,sh>0?0:vw*kk,0,vw,vh);camera.updateProjectionMatrix();
+  }
+  return {
+    render(time){apply(time);
+      if(composer){const t0=performance.now();composer.render();perf.n++;if(perf.last)perf.acc+=t0-perf.last;perf.last=t0;
+        if(perf.n===120){if(perf.acc/119>42){composer=null;bloom=null;grade=null;sky.material.uniforms.lin.value=0;renderer.setPixelRatio(1);resize();}}}
+      else renderer.render(scene,camera);},
+    setStruct(key){M.struct.color.setHex(STRUCT[key].hex);},
+    setFabric(key){drawFabric(key);}
+  };
+}
+let introK=1;
+
+/* ================= MAIN LOOP ================= */
+let sceneActive=true;
+try{scene3d=initScene();}catch(e){document.documentElement.classList.add('no3d');scene3d=null;}
+const sceneSections=$$('[data-scene]');
+const visible=new Set();
+const ioScene=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)visible.add(e.target);else visible.delete(e.target);});sceneActive=visible.size>0;},{threshold:0});
+sceneSections.forEach(s=>ioScene.observe(s));
+const ioMode=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)setMode(e.target.dataset.preset);});},{rootMargin:'-48% 0px -48% 0px'});
+$$('[data-preset]').forEach(s=>ioMode.observe(s));
+
+const hero=$('#hero'), shadeVal=$('#shadeVal'), shadeBar=$('#shadeBar');
+const photoReady=false;
+let last=performance.now();
+function loop(now){
+  requestAnimationFrame(loop);
+  const dt=clamp((now-last)/1000,0,.12);last=now;
+  if(mode==='hero'){
+    const p=clamp(scrollY/(hero.offsetHeight*.85),0,1);
+    T.louver=.12+.88*p;T.dusk=.12*p;T.o1=p;T.cy=3.2-.8*p;T.cz=10.4-2*p;
+  }
+  const f=RM?1:1-Math.exp(-dt*2.8);
+  for(const k in T){S[k]+= (T[k]-S[k])*f;}
+  const pct=Math.round(S.louver*100);
+  if(shadeVal.textContent!=pct){shadeVal.textContent=pct;shadeBar.style.width=pct+'%';}
+  if(scene3d&&sceneActive)scene3d.render(now/1000);
+}
+requestAnimationFrame(loop);
+
+/* ================= SCROLL / GSAP ================= */
+const top=$('#top'), prog=$('#progress');
+function onScroll(){top.classList.toggle('scrolled',scrollY>40);const h=document.documentElement.scrollHeight-innerHeight;prog.style.transform='scaleX('+(h>0?clamp(scrollY/h,0,1):0).toFixed(4)+')';}
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+/* film grain */
+(function(){try{const c=document.createElement('canvas');c.width=c.height=180;const g=c.getContext('2d'),id=g.createImageData(180,180);for(let i=0;i<id.data.length;i+=4){const v=Math.random()*255|0;id.data[i]=id.data[i+1]=id.data[i+2]=v;id.data[i+3]=255;}g.putImageData(id,0,0);$('.grain').style.backgroundImage='url('+c.toDataURL()+')';if(RM)$('.grain').style.animation='none';}catch(e){}})();
+/* cursor */
+(function(){
+  if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+  const cur=$('#cursor'),lbl=$('#cursorLbl');let x=-100,y=-100,cx=-100,cy=-100;
+  addEventListener('mousemove',e=>{x=e.clientX;y=e.clientY;cur.classList.add('on');},{passive:true});
+  document.addEventListener('mouseleave',()=>cur.classList.remove('on'));
+  document.addEventListener('mouseover',e=>{const t=e.target.closest('[data-cursor],a,button,input[type=range],.sw');
+    cur.classList.remove('big','link');lbl.textContent='';
+    if(!t)return;if(t.dataset.cursor){cur.classList.add('big');lbl.textContent=t.dataset.cursor;}else cur.classList.add('link');});
+  (function f(){cx+=(x-cx)*.22;cy+=(y-cy)*.22;cur.style.transform='translate3d('+cx+'px,'+cy+'px,0)';requestAnimationFrame(f);})();
+})();
+if(window.gsap&&window.ScrollTrigger&&!RM){
+  gsap.registerPlugin(ScrollTrigger);
+  if(window.Lenis){
+    const lenis=new Lenis({lerp:.1,smoothWheel:true});
+    lenis.on('scroll',ScrollTrigger.update);
+    gsap.ticker.add(t=>lenis.raf(t*1000));gsap.ticker.lagSmoothing(0);
+    $$('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1&&$(id)){e.preventDefault();closeMenu();lenis.scrollTo(id,{offset:id==='#hero'?0:-10,duration:1.6});}}));
+  }
+  // cinematic entrance
+  const intro=gsap.timeline({paused:true});const introObj={k:0};introK=0;
+  gsap.set('#lbT,#lbB',{scaleY:1});
+  gsap.set('.hero h1 .line > span',{yPercent:115});
+  gsap.set(['.hero .eyebrow','.hero .lead','.hero-cta','.hero-foot'],{y:26,opacity:0});
+  intro
+    .fromTo(introObj,{k:0},{k:1,duration:3.4,ease:'expo.out',onUpdate:()=>{introK=introObj.k;}},0)
+    .fromTo('#scene',{filter:'blur(14px)'},{filter:'blur(0px)',duration:2.2,ease:'power3.out',clearProps:'filter'},0)
+    .to('#lbT,#lbB',{scaleY:0,duration:1.6,ease:'power4.inOut'},.9)
+    .fromTo('#flare',{xPercent:38,yPercent:-26,opacity:0},{xPercent:-30,yPercent:8,opacity:1,duration:1.4,ease:'power2.out'},.35)
+    .to('#flare',{opacity:0,duration:1.6,ease:'power2.inOut'},1.5)
+    .to('.hero h1 .line > span',{yPercent:0,duration:1.3,ease:'power4.out',stagger:.14},.75)
+    .to(['.hero .eyebrow','.hero .lead','.hero-cta','.hero-foot'],{y:0,opacity:1,duration:1,ease:'power3.out',stagger:.09},1.15)
+    .fromTo('#shadeBar',{scaleX:0},{scaleX:1,duration:1.2,ease:'power3.out'},1.5);
+  let introStarted=false;
+  const startIntro=()=>{if(introStarted)return;introStarted=true;intro.play();};
+  setTimeout(startIntro,700);
+  gsap.to('.hero .wrap',{yPercent:-14,opacity:.15,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+  $$('.panel,.cfg').forEach(p=>gsap.from(p,{y:60,opacity:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:p,start:'top 85%',once:true}}));
+  $$('.proc li,.wrow,.facts div,.req li,.cat h3,.cat p').forEach((el,i)=>gsap.from(el,{y:30,opacity:0,duration:.8,ease:'power3.out',delay:(i%4)*.06,scrollTrigger:{trigger:el,start:'top 92%',once:true}}));
+  // statement word fill
+  const st=$('#statement');
+  const words=[];
+  st.childNodes.forEach(n=>{if(n.nodeType===3){n.textContent.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w)){words.push(document.createTextNode(w));}else{const s=document.createElement('span');s.className='w';s.textContent=w;words.push(s);}});}else{n.classList.add('w');words.push(n);}});
+  st.textContent='';words.forEach(w=>st.appendChild(w));
+  gsap.fromTo(st.querySelectorAll('.w'),{opacity:.16},{opacity:1,stagger:.1,ease:'none',scrollTrigger:{trigger:st,start:'top 82%',end:'bottom 45%',scrub:true}});
+  $$('[data-parallax]').forEach(el=>gsap.fromTo(el,{yPercent:-8},{yPercent:8,ease:'none',scrollTrigger:{trigger:el.parentNode,start:'top bottom',end:'bottom top',scrub:true}}));
+  // word-mask headline reveals
+  function splitWords(el){
+    const frag=document.createDocumentFragment();
+    [...el.childNodes].forEach(n=>{
+      if(n.nodeType===3){n.textContent.split(/(\s+)/).forEach(w=>{if(!w)return;if(/^\s+$/.test(w)){frag.appendChild(document.createTextNode(' '));return;}const o=document.createElement('span');o.className='wm';const i=document.createElement('span');i.textContent=w;o.appendChild(i);frag.appendChild(o);});}
+      else if(n.nodeType===1){const o=document.createElement('span');o.className='wm';o.appendChild(n.cloneNode(true));frag.appendChild(o);}
+    });
+    el.textContent='';el.appendChild(frag);return el.querySelectorAll('.wm > *');
+  }
+  $$('.h2,.manifesto h2,.contact .big,.cfg h2,.panel h3').forEach(el=>{
+    const parts=splitWords(el);
+    gsap.from(parts,{yPercent:115,rotate:2,duration:1.15,ease:'power4.out',stagger:.07,scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+  });
+  // image curtain reveals
+  $$('[data-reveal]').forEach(el=>{
+    const img=el.querySelector('img');
+    const tl=gsap.timeline({scrollTrigger:{trigger:el,start:'top 90%',once:true}});
+    tl.fromTo(el,{'--clip':'100%'},{'--clip':'0%',duration:1.3,ease:'power4.inOut'},0);
+    if(img)tl.fromTo(img,{scale:1.28},{scale:1,duration:1.8,ease:'power3.out',clearProps:'transform'},0);
+  });
+  $$('.detail').forEach(el=>gsap.fromTo(el,{yPercent:40},{yPercent:-10,ease:'none',scrollTrigger:{trigger:el.closest('.step'),start:'top bottom',end:'bottom top',scrub:true}}));
+  // magnetic buttons
+  if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+    $$('.btn').forEach(b=>{
+      const xTo=gsap.quickTo(b,'x',{duration:.5,ease:'power3.out'}),yTo=gsap.quickTo(b,'y',{duration:.5,ease:'power3.out'});
+      b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();xTo((e.clientX-r.left-r.width/2)*.22);yTo((e.clientY-r.top-r.height/2)*.35);});
+      b.addEventListener('pointerleave',()=>{xTo(0);yTo(0);});
+    });
+  }
+  addEventListener('load',()=>ScrollTrigger.refresh());
+  gsap.from('.year',{yPercent:20,opacity:0,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'.year',start:'top 85%',once:true}});
+  gsap.fromTo('.wordmark',{xPercent:6},{xPercent:-6,ease:'none',scrollTrigger:{trigger:'.wordmark',start:'top bottom',end:'bottom top',scrub:true}});
+}
+
+/* ================= NAV ================= */
+const burger=$('#burger');
+function closeMenu(){document.body.classList.remove('menu-open');burger.setAttribute('aria-expanded','false');}
+burger.addEventListener('click',()=>{const o=document.body.classList.toggle('menu-open');burger.setAttribute('aria-expanded',o?'true':'false');});
+$$('#drawer a').forEach(a=>a.addEventListener('click',closeMenu));
+
+/* ================= THUMBS (foto reali del cliente, nascoste se non disponibili) ================= */
+$$('.ph img').forEach(i=>{const fail=()=>i.parentNode.classList.add('failed');if(i.complete&&i.naturalWidth===0&&i.currentSrc)fail();i.addEventListener('error',fail);});
+
+/* ================= PERGOLA STEP SLIDER ================= */
+const lr=$('#louverRange'), lo=$('#louverOut');
+function setRangeFill(r){r.style.setProperty('--p',((r.value-r.min)/(r.max-r.min)*100)+'%');}
+function louverFromRange(){const v=lr.value/100;PRESETS.pergola.louver=v;PRESETS.pergola.o1=v;if(mode==='pergola'){T.louver=v;T.o1=v;}lo.textContent=Math.round((1-v)*135)+'°';setRangeFill(lr);}
+lr.addEventListener('input',louverFromRange);louverFromRange();
+
+/* ================= CONFIGURATOR ================= */
+const sw=(wrap,obj,key,nameEl,cb)=>{
+  Object.entries(obj).forEach(([k,o])=>{const b=document.createElement('button');b.type='button';b.className='sw';b.dataset.v=k;b.setAttribute('aria-label',o.name);
+    b.style.background=o.b?`repeating-linear-gradient(90deg,${o.a} 0 6px,${o.b} 6px 12px)`:(o.css||o.a);b.setAttribute('aria-pressed',cfg[key]===k?'true':'false');
+    b.addEventListener('click',()=>{cfg[key]=k;$$('.sw',wrap).forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));nameEl.textContent=o.name;cb(k);updateCfg();});wrap.appendChild(b);});
+  nameEl.textContent=obj[cfg[key]].name;
+};
+sw($('#cfgStruct'),STRUCT,'struct',$('#structName'),k=>scene3d&&scene3d.setStruct(k));
+sw($('#cfgFabric'),FABRIC,'fabric',$('#fabricName'),k=>scene3d&&scene3d.setFabric(k));
+const cW=$('#cfgW'),cD=$('#cfgD'),cL=$('#cfgL');
+function setProduct(p){
+  cfg.product=p;
+  $$('#cfgProduct button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.v===p?'true':'false'));
+  const isT=p==='tenda';
+  $('#cfgLouverWrap').hidden=isT;
+  $('#fabricSet').hidden=!(isT||p==='windy');
+  $('#cfgDLabel').textContent=isT?'Sporgenza':'Profondità';
+  if(isT){cW.min=200;cW.max=600;cW.value=Math.round(cfg.tw*100);cD.min=150;cD.max=350;cD.value=Math.round(cfg.tl*100);}
+  else{cW.min=300;cW.max=600;cW.value=Math.round(cfg.w*100);cD.min=250;cD.max=500;cD.value=Math.round(cfg.d*100);}
+  updateCfg();
+}
+$$('#cfgProduct button').forEach(b=>b.addEventListener('click',()=>setProduct(b.dataset.v)));
+$$('#cfgOpt button').forEach(b=>b.addEventListener('click',()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on?'true':'false');
+  if(b.dataset.v==='sera')cfg.sera=on;else on?cfg.opts.add(b.dataset.v):cfg.opts.delete(b.dataset.v);updateCfg();}));
+[cW,cD,cL].forEach(r=>r.addEventListener('input',()=>{
+  if(cfg.product==='tenda'){cfg.tw=cW.value/100;cfg.tl=cD.value/100;}else{cfg.w=cW.value/100;cfg.d=cD.value/100;}
+  cfg.louver=cL.value/100;updateCfg();}));
+const PNAME={pergola:'Pergola bioclimatica',tenda:'Tenda da sole a bracci',windy:'Pergola con chiusure Windy',vetrate:'Pergola con vetrate panoramiche'};
+function updateCfg(){
+  const isT=cfg.product==='tenda';
+  const w=isT?cfg.tw:cfg.w, d=isT?cfg.tl:cfg.d;
+  $('#cfgWOut').textContent=fmt(w,2)+' m';$('#cfgDOut').textContent=fmt(d,2)+' m';
+  $('#cfgLOut').textContent=Math.round((1-cfg.louver)*135)+'°';
+  [cW,cD,cL].forEach(setRangeFill);
+  $('#cfgArea').textContent=fmt(w*d,1);$('#cfgSize').textContent=fmt(w,2)+' × '+fmt(d,2)+' m';
+  const lines=['Ciao Vertical House, vorrei un preventivo per:','• Prodotto: '+PNAME[cfg.product],'• Misure indicative: '+fmt(w,2)+' × '+fmt(d,2)+' m ('+fmt(w*d,1)+' m²)','• Struttura: '+STRUCT[cfg.struct].name];
+  if(isT||cfg.product==='windy')lines.push('• Telo: '+FABRIC[cfg.fabric].name);
+  const o=[...cfg.opts];if(o.length)lines.push('• Optional: '+o.join(', '));
+  lines.push('Configurato dal sito verticalhouse.it');
+  $('#cfgSend').href='https://wa.me/393791959057?text='+encodeURIComponent(lines.join('\n'));
+  if(mode==='config')Object.assign(T,configPreset());
+}
+$('#cfgForm').addEventListener('submit',e=>e.preventDefault());
+$$('[data-cfg]').forEach(a=>a.addEventListener('click',()=>setProduct(a.dataset.cfg)));
+setProduct('pergola');
+
+/* ================= WIND TUNNEL ================= */
+(function(){
+  const cv=$('#windCanvas'),g=cv.getContext('2d'),range=$('#windRange');
+  const kmhEl=$('#kmh'),bN=$('#beauN'),bName=$('#beauName'),status=$('#windStatus');
+  const BF=[[1,'Calma'],[6,'Bava di vento'],[12,'Brezza leggera'],[20,'Brezza tesa'],[29,'Vento moderato'],[39,'Vento teso'],[50,'Vento fresco'],[62,'Vento forte'],[75,'Burrasca moderata'],[89,'Burrasca forte'],[103,'Tempesta'],[118,'Fortunale'],[999,'Uragano']];
+  let W=0,H=0,dpr=1,speed=20,shown=-1,guides=true,auto=!RM,inView=false,t=0,lastT=performance.now();
+  const parts=Array.from({length:240},()=>({x:Math.random(),y:Math.random(),l:Math.random()*.6+.4,s:Math.random()*.5+.75}));
+  function size(){const r=cv.getBoundingClientRect();dpr=Math.min(devicePixelRatio||1,2);W=r.width;H=r.height;cv.width=W*dpr;cv.height=H*dpr;g.setTransform(dpr,0,0,dpr,0,0);}
+  size();addEventListener('resize',size);
+  new IntersectionObserver(es=>{inView=es[0].isIntersecting;},{threshold:.1}).observe(cv);
+  range.addEventListener('input',()=>{auto=false;speed=+range.value;setRangeFill(range);});
+  setRangeFill(range);
+  $$('#guideToggle button').forEach(b=>b.addEventListener('click',()=>{guides=b.dataset.v==='1';$$('#guideToggle button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));}));
+  function hud(){
+    const v=Math.round(speed);if(v===shown)return;shown=v;
+    kmhEl.textContent=v;let i=0;while(v>=BF[i][0])i++;bN.textContent='Beaufort '+i;bName.textContent=BF[i][1];
+    let warn=false,txt;
+    if(guides){warn=v>90;txt=v>90?'Oltre i 90 km/h dei test: la tenda va riavvolta':'Telo in tensione nelle guide';}
+    else{warn=v>29;txt=v>29?'Senza guide il telo sbatte: va riavvolto':'Telo libero, vento debole';}
+    status.classList.toggle('warn',warn);status.lastChild.textContent=txt;
+  }
+  function draw(now){
+    requestAnimationFrame(draw);
+    const dt=Math.min(.05,(now-lastT)/1000);lastT=now;
+    if(!inView)return;
+    t+=dt;
+    if(auto){speed=50+42*Math.sin(t*.32-1.4);range.value=Math.round(speed);setRangeFill(range);}
+    hud();
+    const s=speed/90;
+    g.clearRect(0,0,W,H);
+    // floor grid
+    g.strokeStyle='rgba(236,239,234,.05)';g.lineWidth=1;
+    for(let x=0;x<W;x+=32){g.beginPath();g.moveTo(x,0);g.lineTo(x,H);g.stroke();}
+    for(let y=0;y<H;y+=32){g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke();}
+    const x0=W*.6, top=H*.2, bot=H*.84, mid=(top+bot)/2;
+    // fabric shape
+    let bulge, swing=0, flutter=0;
+    if(guides){bulge=Math.min(1.25,s)*(W*.05);flutter=Math.sin(t*(4+s*10))*s*1.6;}
+    else{bulge=Math.min(1.4,s)*(W*.13);flutter=Math.sin(t*(3+s*12))*s*W*.03;swing=Math.sin(t*(2.2+s*6))*s*W*.07+s*W*.06;}
+    // particles
+    g.lineCap='round';
+    parts.forEach(p=>{
+      p.x+=dt*(.04+s*1.05)*p.s;if(p.x>1.05){p.x=-.05;p.y=Math.random();}
+      const px=p.x*W, py=p.y*H, len=6+s*70*p.l;
+      let dy=0;
+      if(py>top-10&&py<bot+10&&px>x0-W*.22&&px<x0+bulge+30){
+        if(guides||px<x0-6){const d=(py-mid)/((bot-top)/2);dy=Math.sign(d||1)*Math.pow(clamp((px-(x0-W*.22))/(W*.22),0,1),2)*(1-Math.abs(d)*.6)*40;}
+        if(px>x0-4&&px<x0+bulge+24)return;
+      }
+      g.strokeStyle='rgba(155,205,220,'+(.12+.5*Math.min(1,s))*p.l+')';g.lineWidth=1.2;
+      g.beginPath();g.moveTo(px-len,py+dy*.6);g.lineTo(px,py+dy);g.stroke();
+    });
+    // cassonetto
+    g.fillStyle='#4A545A';g.fillRect(x0-18,top-24,36,22);
+    // guides
+    if(guides){g.fillStyle='#8E9AA0';g.fillRect(x0-3,top-2,6,bot-top+8);}
+    // fabric (side view)
+    const bx=x0+swing, by=bot-(guides?0:Math.max(0,s-.5)*30);
+    g.beginPath();g.moveTo(x0,top);
+    g.bezierCurveTo(x0+bulge+flutter,top+(bot-top)*.3,bx+bulge*.9-flutter,top+(bot-top)*.75,bx,by);
+    g.lineWidth=7;g.strokeStyle=guides?'#FFB547':'#E9734A';g.stroke();
+    // fabric face hint (stripes)
+    g.lineWidth=1;g.strokeStyle='rgba(255,255,255,.25)';g.setLineDash([3,6]);
+    g.beginPath();g.moveTo(x0+2,top);g.bezierCurveTo(x0+bulge+flutter+2,top+(bot-top)*.3,bx+bulge*.9-flutter+2,top+(bot-top)*.75,bx+2,by);g.stroke();g.setLineDash([]);
+    // bottom bar
+    g.fillStyle='#C9D1D4';g.fillRect(bx-12,by-3,24,7);
+    // ground
+    g.fillStyle='rgba(236,239,234,.18)';g.fillRect(0,bot+14,W,1);
+    g.fillStyle='rgba(236,239,234,.5)';g.font='500 11px "IBM Plex Mono", monospace';
+    g.fillText(guides?'GUIDE LATERALI':'NESSUNA GUIDA',x0+14,bot+32);
+    g.fillText('VENTO →',18,bot+32);
+  }
+  requestAnimationFrame(draw);
+})();
+
+/* ================= TAX CALC ================= */
+(function(){
+  const inp=$('#spesa');let rate=.5;
+  function parse(){return Math.max(0,parseInt((inp.value||'').replace(/\D/g,''),10)||0);}
+  function calc(){const sp=parse(),base=Math.min(sp,60000),det=base*rate;
+    $('#detr').textContent=fmt(Math.round(det))+' €';$('#rata').textContent=fmt(Math.round(det/10))+' €';
+    $('#netto').textContent=fmt(Math.round(sp-det))+' €';$('#perc').textContent=sp?'−'+fmt(Math.round(det/sp*100))+'%':'—';}
+  inp.addEventListener('input',()=>{const v=parse();inp.value=v?fmt(v):'';calc();});
+  $$('#casaToggle button').forEach(b=>b.addEventListener('click',()=>{rate=+b.dataset.v;$$('#casaToggle button').forEach(x=>x.setAttribute('aria-pressed',x===b?'true':'false'));calc();}));
+  calc();
+})();
+
+/* ================= WORKS ================= */
+(function(){
+  const W=[
+    {n:'Fendi Foro Traiano',t:'Roma',u:'https://www.verticalhouse.it/portfolio/fendi-foro-traiano/',i:'https://www.verticalhouse.it/wp-content/uploads/2015/02/fendi-foro-traiano-1.jpg'},
+    {n:'Cinecittà World',t:'Parco tematico',u:'https://www.verticalhouse.it/portfolio/cinecitta-world/',i:'https://www.verticalhouse.it/wp-content/uploads/2015/02/cinecitta-world-1.jpg'},
+    {n:'Olimpia Città dello Sport',t:'Centro sportivo',u:'https://www.verticalhouse.it/portfolio/olimpia-citta-dello-sport/',i:'https://www.verticalhouse.it/wp-content/uploads/2015/02/olimpia-1.jpg'},
+    {n:'Agriturismo Colticlub',t:'Agriturismo',u:'https://www.verticalhouse.it/portfolio/agriturismo-colticlub/',i:'https://www.verticalhouse.it/wp-content/uploads/2015/02/agriturismo-colticlub-2.jpg'},
+    {n:'Mamaflò',t:'Ostia',u:'https://www.verticalhouse.it/portfolio/mamaflo-ostia/',i:'https://www.verticalhouse.it/wp-content/uploads/2015/02/mamaflo-ostia-2.jpg'},
+    {n:'Pomodorino',t:'Locale',u:'https://www.verticalhouse.it/portfolio/pomodorino/',i:'https://www.verticalhouse.it/wp-content/uploads/2015/02/pomodorino-1.jpg'}
+  ];
+  const list=$('#wlist'),peek=$('#peek'),img=$('#peekImg'),fb=$('#peekFb');
+  const ok={};
+  W.forEach((w,i)=>{
+    const a=document.createElement('a');a.className='wrow';a.dataset.cursor='Apri';a.href=w.u;a.target='_blank';a.rel='noopener';
+    a.innerHTML='<span class="n">'+String(i+1).padStart(2,'0')+'</span><h3></h3><span class="t"></span>';
+    a.querySelector('h3').textContent=w.n;a.querySelector('.t').textContent=w.t;
+    a.addEventListener('mouseenter',()=>{peek.classList.add('on');fb.innerHTML='';const s=document.createElement('small');s.textContent=w.t;fb.appendChild(s);fb.appendChild(document.createTextNode(w.n));
+      img.style.display=ok[i]===false?'none':'';img.onload=()=>{ok[i]=true;img.style.display='';fb.style.display='none';};img.onerror=()=>{ok[i]=false;img.style.display='none';fb.style.display='';};
+      fb.style.display=ok[i]?'none':'';img.src=w.i;});
+    a.addEventListener('mouseleave',()=>peek.classList.remove('on'));
+    list.appendChild(a);
+  });
+  let px=0,py=0,cx=0,cy=0;
+  addEventListener('mousemove',e=>{px=e.clientX;py=e.clientY;},{passive:true});
+  (function f(){cx+=(px-cx)*.14;cy+=(py-cy)*.14;peek.style.left=cx+'px';peek.style.top=cy+'px';requestAnimationFrame(f);})();
+  const brands=['Pratic','Tempotest','Bandalux','DFM Italia','Bettio','Nice','Naizil','Giovanardi','Nardi','Talenti','Varaschin'];
+  [$('#mq'),$('#mq2')].forEach(m=>brands.forEach(b=>{const s=document.createElement('span');s.textContent=b;m.appendChild(s);}));
+})();
+
+/* ================= CONTACT ================= */
+function copyText(txt,btn){
+  const done=()=>{const o=btn.textContent;btn.textContent='Copiato';setTimeout(()=>btn.textContent=o,1600);};
+  try{navigator.clipboard.writeText(txt).then(done,()=>fallback());}catch(e){fallback();}
+  function fallback(){const ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');done();}catch(e){}ta.remove();}
+}
+$$('.copy').forEach(b=>b.addEventListener('click',()=>copyText(b.dataset.copy,b)));
+let leadText='';
+$('#leadForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const n=$('#fName').value.trim();
+  if(!n){$('#fName').focus();$('#fName').setAttribute('aria-invalid','true');$('#fName').placeholder='Scrivi il tuo nome';return;}
+  $('#fName').removeAttribute('aria-invalid');
+  leadText=['Ciao Vertical House, sono '+n+(($('#fCity').value.trim())?' da '+$('#fCity').value.trim():'')+'.','Mi interessa: '+$('#fProd').value+'.',$('#fMsg').value.trim()].filter(Boolean).join('\n');
+  $('#sentWa').href='https://wa.me/393791959057?text='+encodeURIComponent(leadText);
+  $('#sent').hidden=false;
+});
+$('#sentCopy').addEventListener('click',e=>copyText(leadText,e.currentTarget));
+})();
+</script>
